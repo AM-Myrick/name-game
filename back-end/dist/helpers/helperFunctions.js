@@ -40,6 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __importDefault(require("axios"));
+// access api and get all employees
 exports.getAllEmployees = function () { return __awaiter(void 0, void 0, void 0, function () {
     var allEmployees, response, err_1;
     return __generator(this, function (_a) {
@@ -62,15 +63,19 @@ exports.getAllEmployees = function () { return __awaiter(void 0, void 0, void 0,
         }
     });
 }); };
+// return array of employees named Matt or Matthew
 exports.getMatEmployees = function (employees) {
     return employees.filter(function (employee) { return employee.firstName === "Matthew" || employee.firstName === "Matt"; });
 };
+// return array of current employees
 exports.getCurrentEmployees = function (employees) {
     return employees.filter(function (employee) { return employee.hasOwnProperty("jobTitle"); });
 };
+// return array of random employees
 exports.getRandomEmployees = function (numOfOptions, employees) {
     var selectedEmployees = [];
     var _loop_1 = function () {
+        // store a random employee and ensure they haven't already been added to selectedEmployees
         var randomEmployee = employees[Math.floor(Math.random() * employees.length)];
         var isNotSelected = selectedEmployees.some(function (employee) { return employee.id !== randomEmployee.id; });
         if (selectedEmployees.length === 0 || isNotSelected) {
@@ -81,5 +86,9 @@ exports.getRandomEmployees = function (numOfOptions, employees) {
         _loop_1();
     }
     return selectedEmployees;
+};
+exports.getAnswer = function (employees) {
+    var selectedEmployee = employees[Math.floor(Math.random() * employees.length)];
+    return selectedEmployee.firstName + " " + selectedEmployee.lastName;
 };
 //# sourceMappingURL=helperFunctions.js.map

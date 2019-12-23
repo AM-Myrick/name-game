@@ -63,8 +63,9 @@ server.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, f
         }
     });
 }); });
+// returns all current and former employees
 server.get("/api/all-employees/:options", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var numOfOptions, randomEmployees, _a, _b;
+    var numOfOptions, selectedEmployees, _a, _b, answer;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
@@ -73,16 +74,18 @@ server.get("/api/all-employees/:options", function (req, res) { return __awaiter
                 _b = [numOfOptions];
                 return [4 /*yield*/, helperFunctions_1.getAllEmployees()];
             case 1:
-                randomEmployees = _a.apply(void 0, _b.concat([_c.sent()]));
+                selectedEmployees = _a.apply(void 0, _b.concat([_c.sent()]));
+                answer = helperFunctions_1.getAnswer(selectedEmployees);
                 res.status(200).json({
-                    data: randomEmployees
+                    data: { selectedEmployees: selectedEmployees, answer: answer }
                 });
                 return [2 /*return*/];
         }
     });
 }); });
+// returns all current employees
 server.get("/api/current-employees/:options", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var numOfOptions, randomCurrentEmployees, _a, _b, _c;
+    var numOfOptions, selectedEmployees, _a, _b, _c, answer;
     return __generator(this, function (_d) {
         switch (_d.label) {
             case 0:
@@ -92,16 +95,18 @@ server.get("/api/current-employees/:options", function (req, res) { return __awa
                 _c = helperFunctions_1.getCurrentEmployees;
                 return [4 /*yield*/, helperFunctions_1.getAllEmployees()];
             case 1:
-                randomCurrentEmployees = _a.apply(void 0, _b.concat([_c.apply(void 0, [_d.sent()])]));
+                selectedEmployees = _a.apply(void 0, _b.concat([_c.apply(void 0, [_d.sent()])]));
+                answer = helperFunctions_1.getAnswer(selectedEmployees);
                 res.status(200).json({
-                    data: randomCurrentEmployees
+                    data: { selectedEmployees: selectedEmployees, answer: answer }
                 });
                 return [2 /*return*/];
         }
     });
 }); });
+// returns all employees named matt or matthew
 server.get("/api/mat-employees/:options", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var numOfOptions, randomMatEmployees, _a, _b, _c;
+    var numOfOptions, selectedEmployees, _a, _b, _c, answer;
     return __generator(this, function (_d) {
         switch (_d.label) {
             case 0:
@@ -111,9 +116,10 @@ server.get("/api/mat-employees/:options", function (req, res) { return __awaiter
                 _c = helperFunctions_1.getMatEmployees;
                 return [4 /*yield*/, helperFunctions_1.getAllEmployees()];
             case 1:
-                randomMatEmployees = _a.apply(void 0, _b.concat([_c.apply(void 0, [_d.sent()])]));
+                selectedEmployees = _a.apply(void 0, _b.concat([_c.apply(void 0, [_d.sent()])]));
+                answer = helperFunctions_1.getAnswer(selectedEmployees);
                 res.status(200).json({
-                    data: randomMatEmployees
+                    data: { selectedEmployees: selectedEmployees, answer: answer }
                 });
                 return [2 /*return*/];
         }
