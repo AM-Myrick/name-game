@@ -1,7 +1,7 @@
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
-import { getAllEmployees, getAnswer, getCurrentEmployees, getMatEmployees, getRandomEmployees } from "./Helpers/helperFunctions";
+import { getAllEmployees, getAnswer, getCurrentEmployees, getMatEmployees, getRandomEmployees, sendError, sendSuccess } from "./Helpers/helperFunctions";
 import Employee from "./Models/Employee";
 const port = process.env.PORT || 9001;
 
@@ -27,17 +27,14 @@ server.get("/api/all-employees/:options", async (req, res) => {
     const allEmployees: Employee[] = await getAllEmployees().catch((err) => {
       throw err;
     });
-    const numOfOptions: number = parseInt(req.params.options, 10);
-    const selectedEmployees: Employee[] = getRandomEmployees(numOfOptions, allEmployees);
-    const answer: string = getAnswer(selectedEmployees);
 
-    res.status(200).json({
-      data: { selectedEmployees, answer }
-    });
+    const numOfOptions: number = parseInt(req.params.options, 10);
+    const randomEmployees: Employee[] = getRandomEmployees(numOfOptions, allEmployees);
+    const answer: string = getAnswer(randomEmployees);
+
+    sendSuccess(res, randomEmployees, answer);
   } catch (err) {
-    res.status(404).json({
-      data: { err, message: "Could not access employee API."}
-    });
+    sendError(res, err, "Could not access employee API");
   }
 });
 
@@ -50,16 +47,12 @@ server.get("/api/current-employees/:options", async (req, res) => {
 
     const numOfOptions: number = parseInt(req.params.options, 10);
     const currentEmployees: Employee[] = getCurrentEmployees(allEmployees);
-    const selectedEmployees: Employee[] = getRandomEmployees(numOfOptions, currentEmployees);
-    const answer: string = getAnswer(selectedEmployees);
+    const randomEmployees: Employee[] = getRandomEmployees(numOfOptions, currentEmployees);
+    const answer: string = getAnswer(randomEmployees);
 
-    res.status(200).json({
-      data: { selectedEmployees, answer }
-    });
+    sendSuccess(res, randomEmployees, answer);
   } catch (err) {
-    res.status(404).json({
-      data: { err, message: "Could not access employee API."}
-    });
+    sendError(res, err, "Could not access employee API");
   }
 });
 
@@ -69,18 +62,15 @@ server.get("/api/mat-employees/:options", async (req, res) => {
     const allEmployees: Employee[] = await getAllEmployees().catch((err) => {
       throw err;
     });
+
     const numOfOptions: number = parseInt(req.params.options, 10);
     const matEmployees: Employee[] = getMatEmployees(allEmployees);
-    const selectedEmployees: Employee[] = getRandomEmployees(numOfOptions, matEmployees);
-    const answer: string = getAnswer(selectedEmployees);
+    const randomEmployees: Employee[] = getRandomEmployees(numOfOptions, matEmployees);
+    const answer: string = getAnswer(randomEmployees);
 
-    res.status(200).json({
-      data: { selectedEmployees, answer }
-    });
+    sendSuccess(res, randomEmployees, answer);
   } catch (err) {
-    res.status(404).json({
-      data: { err, message: "Could not access employee API."}
-    });
+    sendError(res, err, "Could not access employee API");
   }
 });
 

@@ -45,3 +45,15 @@ export const getAnswer = (employees: Employee[]) => {
   const selectedEmployee: Employee = employees[Math.floor(Math.random() * employees.length)];
   return `${selectedEmployee.firstName} ${selectedEmployee.lastName}`;
 };
+
+export const sendError = (res: any, err: any, message: string) => {
+  res.status(404).json({
+    data: { err, message }
+  });
+};
+
+export const sendSuccess = (res: any, selectedEmployees: Employee[], answer: string) => {
+  res.status(200).json({
+    data: { selectedEmployees, answer }
+  });
+};
