@@ -1,18 +1,15 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import MenuIcon from '@material-ui/icons/Menu';
+import NavMenu from './NavMenu';
 import '../Styles/Header.css';
 
-const Header: React.FC = () => {
+const Header: React.FC = (props) => {
     return (
         <AppBar position="static">
             <Toolbar className="Toolbar">
-            <IconButton edge="start" color="inherit" aria-label="menu">
-                <MenuIcon />
-            </IconButton>
+            <NavMenu />
             <Typography variant="h4">
                 Name Game
             </Typography>
