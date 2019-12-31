@@ -47,13 +47,9 @@ export const getAnswer = (employees: Employee[]) => {
 };
 
 export const sendError = (res: any, err: any, message: string) => {
-  res.status(404).json({
-    data: { err, message }
-  });
+  res.status(404).json({ err, message });
 };
 
 export const sendSuccess = (res: any, selectedEmployees: Employee[], answer: string) => {
-  res.status(200).json({
-    data: { selectedEmployees, answer }
-  });
+  res.status(200).json({ selectedEmployees, answer });
 };
