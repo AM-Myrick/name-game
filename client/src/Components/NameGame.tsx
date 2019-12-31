@@ -2,7 +2,16 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Employee from '../Models/Employee';
 
-export default class NameGame extends Component {
+axios.defaults.baseURL =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:9001"
+      : "https://nameless-cliffs-24621.herokuapp.com";
+
+interface INameGameProps {
+    gameMode: string
+    numOfResults?: number
+  }
+export default class NameGame extends Component<INameGameProps> {
     constructor(props: any) {
       super(props);
       this.state = {
@@ -12,24 +21,23 @@ export default class NameGame extends Component {
     }
 
     async componentDidMount() {
-        const response = await axios.get('https://willowtreeapps.com/api/v1.0/profiles/');
-        const allEmployees: Employee[] = response.data;
-        const numOfOptions = 5;
-        let selectedEmployees: Employee[] = [];
-
-        while (selectedEmployees.length < numOfOptions) {
-            const randomEmployee: Employee = allEmployees[Math.floor(Math.random() * allEmployees.length)];
-            const isNotSelected = selectedEmployees.some(employee => employee.id !== randomEmployee.id);
-            selectedEmployees.length === 0 ? selectedEmployees.push(randomEmployee) : null;
-
-            if (isNotSelected) {
-                selectedEmployees.push(randomEmployee);
-            }
+        let response;
+        switch(this.props.gameMode) {
+            case 'all':
+                response = await axios.get(`/api/all-employees/5`);
+                break;
+            case 'current':
+                response = await axios.get(`/api/current-employees/5`);
+                break;
+            case 'mat':
+                response = await axios.get(`/api/mat-employees/5`);
+                break;
         }
-        
-        const selectedEmployee: Employee = selectedEmployees[Math.floor(Math.random() * selectedEmployees.length)];
-        const answer = `${selectedEmployee.firstName} ${selectedEmployee.lastName}`;
-        this.setState({ answer, selectedEmployees })
+        if (response) {
+            console.log(response)
+            const { answer, selectedEmployees } = response.data;
+            this.setState({ answer, selectedEmployees })
+        }
     }
 
     render() {
