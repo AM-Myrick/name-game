@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Employee from '../Models/Employee';
+import Box from '@material-ui/core/Box';
 
 axios.defaults.baseURL =
     process.env.NODE_ENV === "development"
@@ -10,9 +11,15 @@ axios.defaults.baseURL =
 interface INameGameProps {
     gameMode: string
     numOfResults?: number
-  }
-export default class NameGame extends Component<INameGameProps> {
-    constructor(props: any) {
+}
+
+interface INameGameState {
+    answer: string
+    selectedEmployees: Employee[]
+}
+
+export default class NameGame extends Component<INameGameProps, INameGameState> {
+    public constructor(props: any) {
       super(props);
       this.state = {
         answer: '',
@@ -21,6 +28,10 @@ export default class NameGame extends Component<INameGameProps> {
     }
 
     async componentDidMount() {
+        this.getData();
+    }
+
+    async getData() {
         let response;
         switch(this.props.gameMode) {
             case 'all':
@@ -34,7 +45,6 @@ export default class NameGame extends Component<INameGameProps> {
                 break;
         }
         if (response) {
-            console.log(response)
             const { answer, selectedEmployees } = response.data;
             this.setState({ answer, selectedEmployees })
         }
@@ -42,7 +52,15 @@ export default class NameGame extends Component<INameGameProps> {
 
     render() {
         return (
-            <h1>Hello World!</h1>
+            <Box>
+                {this.state.selectedEmployees.map((employee: Employee) =>
+                    <EmployeeCard key={employee.id}
+                        employee={employee}
+                        answer={this.state.answer}
+                        startNextRound={this.getData}
+                    />
+                )}
+            </Box>
         )
     }
 }
