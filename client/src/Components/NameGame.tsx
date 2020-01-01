@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import Employee from "../Models/Employee";
@@ -65,9 +65,9 @@ const NameGame: React.FC<INameGameProps> = props => {
         {`Who is ${answer}?`}
       </Typography>
       <Box className={classes.cardDisplay}>
-        {selectedEmployees.map((employee: Employee) => (
+        {selectedEmployees.map((employee: Employee, index: number) => (
           <EmployeeCard
-            key={employee.id}
+            key={employee.id + index}
             employee={employee}
             answer={answer}
             startNextRound={getData}

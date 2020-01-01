@@ -13,14 +13,28 @@ interface IEmployeeCardProps {
   startNextRound: () => Promise<void>;
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 320,
     transition: "border .25s ease-in-out",
-    width: "calc(20% - 20px)"
+    width: "100%",
+    margin: "0 auto",
+    marginBottom: "20px",
+    [theme.breakpoints.up(500)]: {
+        width: "calc(50% - 20px)",
+    },
+    [theme.breakpoints.up(700)]: {
+        width: "calc(33% - 20px)"
+    },
+    [theme.breakpoints.up(1100)]: {
+        width: "calc(20% - 20px)"
+    },
   },
   media: {
-    height: 320
+    height: 160,
+    [theme.breakpoints.up(700)]: {
+        height: 320,
+    },
   },
   incorrect: {
     border: "5px solid red"
@@ -28,7 +42,7 @@ const useStyles = makeStyles({
   hidden: {
     visibility: "hidden"
   }
-});
+}));
 
 const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
   const classes = useStyles();
@@ -51,8 +65,6 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
     }
   };
 
-  // const handleClose = () => setAnchorEl(null);
-
   return (
     <Card
       className={
@@ -73,6 +85,7 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
           >
             {employeeName}
           </Typography>
+          <br />
           <Typography variant="body2" color="textSecondary" component="p">
             {jobTitle}
           </Typography>
