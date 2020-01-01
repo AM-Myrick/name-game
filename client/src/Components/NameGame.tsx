@@ -13,7 +13,7 @@ axios.defaults.baseURL =
 
 interface INameGameProps {
   gameMode: string;
-  numOfResults?: number;
+  numOfResults: number;
 }
 
 const useStyles = makeStyles({
@@ -37,19 +37,19 @@ const NameGame: React.FC<INameGameProps> = props => {
 
   React.useEffect(() => {
     getData();
-  }, [props.gameMode]);
+  }, [props.gameMode, props.numOfResults]);
 
   const getData = async () => {
     let response;
     switch (props.gameMode) {
       case "all":
-        response = await axios.get(`/api/all-employees/5`);
+        response = await axios.get(`/api/all-employees/${props.numOfResults}`);
         break;
       case "current":
-        response = await axios.get(`/api/current-employees/5`);
+        response = await axios.get(`/api/current-employees/${props.numOfResults}`);
         break;
       case "mat":
-        response = await axios.get(`/api/mat-employees/5`);
+        response = await axios.get(`/api/mat-employees/${props.numOfResults}`);
         break;
     }
     if (response) {
