@@ -19,22 +19,22 @@ const useStyles = makeStyles(theme => ({
     transition: "border .25s ease-in-out",
     width: "100%",
     margin: "0 auto",
-    marginBottom: "20px",
+    marginBottom: "10px",
     [theme.breakpoints.up(500)]: {
-        width: "calc(50% - 20px)",
+      width: "calc(50% - 10px)"
     },
     [theme.breakpoints.up(700)]: {
-        width: "calc(33% - 20px)"
+      width: "calc(33% - 10px)"
     },
     [theme.breakpoints.up(1100)]: {
-        width: "calc(20% - 20px)"
-    },
+      width: "calc(20% - 10px)"
+    }
   },
   media: {
-    height: 160,
+    height: 200,
     [theme.breakpoints.up(700)]: {
-        height: 320,
-    },
+      height: 320
+    }
   },
   incorrect: {
     border: "5px solid red"
