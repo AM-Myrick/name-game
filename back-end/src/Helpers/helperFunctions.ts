@@ -6,6 +6,7 @@ export const getAllEmployees = async () => {
   try {
     const allEmployees: Employee[] = [];
     const response = await axios.get("https://willowtreeapps.com/api/v1.0/profiles/");
+    response.data = response.data.filter((employee: Employee) => employee.headshot.hasOwnProperty("url"));
     allEmployees.push(...response.data);
     return allEmployees;
   } catch (err) {
@@ -27,18 +28,16 @@ export const getCurrentEmployees = (employees: Employee[]) => {
 
 // return array of random employees
 export const getRandomEmployees = (numOfOptions: number, employees: Employee[]) => {
-  const selectedEmployees: Employee[] = [];
+  // using a set to ensure no duplicate results
+  const selectedEmployees: Set<Employee> = new Set();
 
-  while (selectedEmployees.length < numOfOptions) {
-    // store a random employee and ensure they haven't already been added to selectedEmployees
+  while (selectedEmployees.size < numOfOptions) {
+    // store a random employee
     const randomEmployee: Employee = employees[Math.floor(Math.random() * employees.length)];
-    const isNotSelected = selectedEmployees.some((employee) => employee.id !== randomEmployee.id);
 
-    if (selectedEmployees.length === 0 || isNotSelected) {
-      selectedEmployees.push(randomEmployee);
-    }
+    selectedEmployees.add(randomEmployee);
   }
-  return selectedEmployees;
+  return Array.from(selectedEmployees);
 };
 
 export const getAnswer = (employees: Employee[]) => {
