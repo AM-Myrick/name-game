@@ -37,7 +37,7 @@ const NameGame: React.FC<INameGameProps> = props => {
 
   React.useEffect(() => {
     getData();
-  }, []);
+  }, [props.gameMode]);
 
   const getData = async () => {
     let response;
