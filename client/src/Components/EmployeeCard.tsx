@@ -16,7 +16,8 @@ interface IEmployeeCardProps {
 const useStyles = makeStyles({
   card: {
     maxWidth: 320,
-    transition: "border .25s ease-in-out"
+    transition: "border .25s ease-in-out",
+    width: "calc(20% - 20px)"
   },
   media: {
     height: 320
