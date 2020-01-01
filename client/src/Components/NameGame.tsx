@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Employee from '../Models/Employee';
 import Box from '@material-ui/core/Box';
+import EmployeeCard from './EmployeeCard';
+import Typography from '@material-ui/core/Typography';
 
 axios.defaults.baseURL =
     process.env.NODE_ENV === "development"
@@ -53,11 +55,14 @@ export default class NameGame extends Component<INameGameProps, INameGameState> 
     render() {
         return (
             <Box>
+                <Typography variant="h4">
+                    {`Who is ${this.state.answer}?`}
+                </Typography>
                 {this.state.selectedEmployees.map((employee: Employee) =>
                     <EmployeeCard key={employee.id}
                         employee={employee}
                         answer={this.state.answer}
-                        startNextRound={this.getData}
+                        startNextRound={this.getData.bind(this)}
                     />
                 )}
             </Box>

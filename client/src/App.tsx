@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import NameGame from './Components/NameGame';
 import Header from './Components/Header';
 import Box from '@material-ui/core/Box';
