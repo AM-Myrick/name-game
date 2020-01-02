@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -8,9 +8,12 @@ import Typography from "@material-ui/core/Typography";
 import Employee from "../Models/Employee";
 
 interface IEmployeeCardProps {
+  index: number;
+  tabIndex: number;
   employee: Employee;
   answer: string;
   startNextRound: () => Promise<void>;
+  scoreDispatch: Dispatch<any>;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -50,7 +53,8 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
   const { firstName, lastName, jobTitle } = props.employee;
   const employeeName = `${firstName} ${lastName}`;
   const answer = props.answer;
-  const [correctAnswer, setCorrectAnswer] = React.useState<null | boolean>(
+
+  const [isCorrectAnswer, setIsCorrectAnswer] = React.useState<null | boolean>(
     null
   );
   const [showName, setShowName] = React.useState<boolean>(false);
@@ -58,17 +62,19 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
   const handleClick = () => {
     if (employeeName === answer) {
       setShowName(true);
+      props.scoreDispatch({ type: "INCREMENT-CORRECT" })
       props.startNextRound();
-    } else {
+    } else if (employeeName !== answer && showName === false) {
       setShowName(true);
-      setCorrectAnswer(false);
+      setIsCorrectAnswer(false);
+      props.scoreDispatch({ type: "INCREMENT-INCORRECT" })
     }
   };
 
   return (
     <Card
       className={
-        correctAnswer === false
+        isCorrectAnswer === false
           ? `${classes.card} ${classes.incorrect}`
           : `${classes.card}`
       }
@@ -85,8 +91,12 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
           >
             {employeeName}
           </Typography>
-          <br />
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            className={showName === false ? classes.hidden : undefined}
+          >
             {jobTitle}
           </Typography>
         </CardContent>

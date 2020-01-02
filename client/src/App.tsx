@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer } from "react";
 import NameGame from "./Components/NameGame";
 import Timer from "./Components/Timer";
 import Header from "./Components/Header";
@@ -6,10 +6,12 @@ import NumOfResultsSelect from "./Components/NumOfResultsSelect";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import { Switch, Route } from "react-router-dom";
+import { initialState, scoreReducer } from "./Reducers/scoreReducer";
 
 const App: React.FC = props => {
   const [isTimerMode, setIsTimerMode] = React.useState<boolean>(false);
   const [numOfResults, setNumOfResults] = React.useState<number>(5);
+  const [scoreState, scoreDispatch] = useReducer(scoreReducer, initialState);
 
   return (
     <Box>
@@ -25,7 +27,7 @@ const App: React.FC = props => {
             exact
             path="/"
             render={props => (
-              <NameGame {...props} numOfResults={numOfResults} gameMode="all" />
+              <NameGame {...props} scoreDispatch={scoreDispatch} numOfResults={numOfResults} gameMode="all" />
             )}
           />
           <Route
@@ -33,6 +35,7 @@ const App: React.FC = props => {
             render={props => (
               <NameGame
                 {...props}
+                scoreDispatch={scoreDispatch}
                 numOfResults={numOfResults}
                 gameMode="current"
               />
@@ -41,7 +44,7 @@ const App: React.FC = props => {
           <Route
             path="/mat-employees"
             render={props => (
-              <NameGame {...props} numOfResults={numOfResults} gameMode="mat" />
+              <NameGame {...props} scoreDispatch={scoreDispatch} numOfResults={numOfResults} gameMode="mat" />
             )}
           />
         </Switch>

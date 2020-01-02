@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import Employee from "../Models/Employee";
@@ -14,6 +14,7 @@ axios.defaults.baseURL =
 interface INameGameProps {
   gameMode: string;
   numOfResults: number;
+  scoreDispatch: Dispatch<any>;
 }
 
 const useStyles = makeStyles({
@@ -46,7 +47,9 @@ const NameGame: React.FC<INameGameProps> = props => {
         response = await axios.get(`/api/all-employees/${props.numOfResults}`);
         break;
       case "current":
-        response = await axios.get(`/api/current-employees/${props.numOfResults}`);
+        response = await axios.get(
+          `/api/current-employees/${props.numOfResults}`
+        );
         break;
       case "mat":
         response = await axios.get(`/api/mat-employees/${props.numOfResults}`);
@@ -56,6 +59,8 @@ const NameGame: React.FC<INameGameProps> = props => {
       const { answer, selectedEmployees } = response.data;
       setAnswer(answer);
       setSelectedEmployees(selectedEmployees);
+    } else {
+        getData();
     }
   };
 
@@ -67,10 +72,13 @@ const NameGame: React.FC<INameGameProps> = props => {
       <Box className={classes.cardDisplay}>
         {selectedEmployees.map((employee: Employee, index: number) => (
           <EmployeeCard
-            key={employee.id + index}
+            index={index}
+            tabIndex={index}
+            key={employee.id}
             employee={employee}
             answer={answer}
             startNextRound={getData}
+            scoreDispatch={props.scoreDispatch}
           />
         ))}
       </Box>

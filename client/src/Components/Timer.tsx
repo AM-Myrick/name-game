@@ -8,7 +8,6 @@ import Badge from "@material-ui/core/Badge";
 
 interface ITimerProps {
   isTimerMode: boolean;
-  //   initialTime: number;
 }
 
 const useStyles = makeStyles({
@@ -30,7 +29,6 @@ const Timer: React.FC<ITimerProps> = props => {
   const classes = useStyles();
   const [displayTimer, setDisplayTimer] = React.useState<boolean>(false);
   const { time, start, reset } = useTimer({
-    // initialTime: props.initialTime,
     initialTime: 60,
     timerType: "DECREMENTAL"
   });
