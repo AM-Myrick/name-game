@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -6,8 +6,8 @@ import NavMenu from "./NavMenu";
 import "../Styles/Header.css";
 
 export interface IHeaderProps {
-  toggleTimerMode: Dispatch<SetStateAction<boolean>>;
-  isTimerMode: boolean;
+  timerDispatch: Dispatch<any>;
+  timerState: any;
 }
 
 const Header: React.FC<IHeaderProps> = props => {
@@ -15,8 +15,8 @@ const Header: React.FC<IHeaderProps> = props => {
     <AppBar position="static">
       <Toolbar className="Toolbar">
         <NavMenu
-          toggleTimerMode={props.toggleTimerMode}
-          isTimerMode={props.isTimerMode}
+          timerDispatch={props.timerDispatch}
+          timerState={props.timerState}
         />
         <Typography variant="h4">Name Game</Typography>
       </Toolbar>

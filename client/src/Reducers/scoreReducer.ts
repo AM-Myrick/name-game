@@ -1,4 +1,4 @@
-export const initialState = {
+export const initialScoreState = {
   name: "",
   correctAnswers: 0,
   incorrectAnswers: 0

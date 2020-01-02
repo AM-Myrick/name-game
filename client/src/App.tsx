@@ -6,28 +6,40 @@ import NumOfResultsSelect from "./Components/NumOfResultsSelect";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import { Switch, Route } from "react-router-dom";
-import { initialState, scoreReducer } from "./Reducers/scoreReducer";
+import { initialScoreState, scoreReducer } from "./Reducers/scoreReducer";
+import { initialTimerState, timerReducer } from "./Reducers/timerReducer";
 
 const App: React.FC = props => {
-  const [isTimerMode, setIsTimerMode] = React.useState<boolean>(false);
   const [numOfResults, setNumOfResults] = React.useState<number>(5);
-  const [scoreState, scoreDispatch] = useReducer(scoreReducer, initialState);
+  const [scoreState, scoreDispatch] = useReducer(
+    scoreReducer,
+    initialScoreState
+  );
+  const [timerState, timerDispatch] = useReducer(
+    timerReducer,
+    initialTimerState
+  );
 
   return (
     <Box>
-      <Header toggleTimerMode={setIsTimerMode} isTimerMode={isTimerMode} />
+      <Header timerDispatch={timerDispatch} timerState={timerState} />
       <Container>
         <NumOfResultsSelect
           numOfResults={numOfResults}
           setNumOfResults={setNumOfResults}
         />
-        <Timer isTimerMode={isTimerMode} />
+        <Timer timerDispatch={timerDispatch} timerState={timerState} />
         <Switch>
           <Route
             exact
             path="/"
             render={props => (
-              <NameGame {...props} scoreDispatch={scoreDispatch} numOfResults={numOfResults} gameMode="all" />
+              <NameGame
+                {...props}
+                scoreDispatch={scoreDispatch}
+                numOfResults={numOfResults}
+                gameMode="all"
+              />
             )}
           />
           <Route
@@ -44,7 +56,12 @@ const App: React.FC = props => {
           <Route
             path="/mat-employees"
             render={props => (
-              <NameGame {...props} scoreDispatch={scoreDispatch} numOfResults={numOfResults} gameMode="mat" />
+              <NameGame
+                {...props}
+                scoreDispatch={scoreDispatch}
+                numOfResults={numOfResults}
+                gameMode="mat"
+              />
             )}
           />
         </Switch>

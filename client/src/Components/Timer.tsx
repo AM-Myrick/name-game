@@ -1,13 +1,15 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import Box from "@material-ui/core/Box";
 import { useTimer } from "use-timer";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import AccessAlarmsOutlinedIcon from "@material-ui/icons/AccessAlarmsOutlined";
 import Badge from "@material-ui/core/Badge";
+import { ITimerState } from "../Reducers/timerReducer";
 
 interface ITimerProps {
-  isTimerMode: boolean;
+  timerState: ITimerState;
+  timerDispatch: Dispatch<any>;
 }
 
 const useStyles = makeStyles({
@@ -27,28 +29,32 @@ const useStyles = makeStyles({
 
 const Timer: React.FC<ITimerProps> = props => {
   const classes = useStyles();
-  const [displayTimer, setDisplayTimer] = React.useState<boolean>(false);
   const { time, start, reset } = useTimer({
-    initialTime: 60,
+    initialTime: 1,
     timerType: "DECREMENTAL"
   });
+  const { isTimerMode, shouldDisplayTimer } = props.timerState;
+  const { timerDispatch } = props;
 
   const startTimer = () => {
     start();
-    setDisplayTimer(true);
+    timerDispatch({ type: "TIMER-STARTED"});
+    timerDispatch({ type: "SHOW-TIMER"});
   };
 
-  if (props.isTimerMode === false) {
+  if (isTimerMode === false) {
     return null;
   }
 
   if (time < 0) {
     reset();
     // handle setting score here
-    setDisplayTimer(false);
+    timerDispatch({ type: "TIMER-FINISHED"});
+    timerDispatch({ type: "HIDE-TIMER"});
+    timerDispatch({ type: "TOGGLE-TIMER-MODE"});
   }
 
-  return displayTimer === false ? (
+  return shouldDisplayTimer === false ? (
     <Box className={classes.box}>
       <Button variant="outlined" color="primary" onClick={startTimer}>
         Start Timer
