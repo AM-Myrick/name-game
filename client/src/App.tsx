@@ -2,6 +2,7 @@ import React, { useReducer } from "react";
 import NameGame from "./Components/NameGame";
 import Timer from "./Components/Timer";
 import Header from "./Components/Header";
+import GameResults from "./Components/GameResults";
 import NumOfResultsSelect from "./Components/NumOfResultsSelect";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
@@ -36,6 +37,7 @@ const App: React.FC = props => {
             render={props => (
               <NameGame
                 {...props}
+                timerState={timerState}
                 scoreDispatch={scoreDispatch}
                 numOfResults={numOfResults}
                 gameMode="all"
@@ -47,6 +49,7 @@ const App: React.FC = props => {
             render={props => (
               <NameGame
                 {...props}
+                timerState={timerState}
                 scoreDispatch={scoreDispatch}
                 numOfResults={numOfResults}
                 gameMode="current"
@@ -58,6 +61,7 @@ const App: React.FC = props => {
             render={props => (
               <NameGame
                 {...props}
+                timerState={timerState}
                 scoreDispatch={scoreDispatch}
                 numOfResults={numOfResults}
                 gameMode="mat"
@@ -65,6 +69,12 @@ const App: React.FC = props => {
             )}
           />
         </Switch>
+        <GameResults
+          scoreState={scoreState}
+          scoreDispatch={scoreDispatch}
+          timerState={timerState}
+          timerDispatch={timerDispatch}
+        />
       </Container>
     </Box>
   );

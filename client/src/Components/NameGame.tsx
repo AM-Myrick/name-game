@@ -5,6 +5,7 @@ import Employee from "../Models/Employee";
 import Box from "@material-ui/core/Box";
 import EmployeeCard from "./EmployeeCard";
 import Typography from "@material-ui/core/Typography";
+import { ITimerState } from "../Reducers/timerReducer";
 
 axios.defaults.baseURL =
   process.env.NODE_ENV === "development"
@@ -14,6 +15,7 @@ axios.defaults.baseURL =
 interface INameGameProps {
   gameMode: string;
   numOfResults: number;
+  timerState: ITimerState;
   scoreDispatch: Dispatch<any>;
 }
 
@@ -38,7 +40,7 @@ const NameGame: React.FC<INameGameProps> = props => {
 
   React.useEffect(() => {
     getData();
-  }, [props.gameMode, props.numOfResults]);
+  }, [props.gameMode, props.numOfResults, props.timerState.shouldRestartTimer]);
 
   const getData = async () => {
     let response;

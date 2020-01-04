@@ -30,16 +30,20 @@ const useStyles = makeStyles({
 const Timer: React.FC<ITimerProps> = props => {
   const classes = useStyles();
   const { time, start, reset } = useTimer({
-    initialTime: 1,
+    initialTime: 10,
     timerType: "DECREMENTAL"
   });
-  const { isTimerMode, shouldDisplayTimer } = props.timerState;
+  const { isTimerMode, shouldDisplayTimer, shouldRestartTimer } = props.timerState;
   const { timerDispatch } = props;
+
+  React.useEffect(() => {
+    startTimer();
+  }, [shouldRestartTimer]);
 
   const startTimer = () => {
     start();
-    timerDispatch({ type: "TIMER-STARTED"});
-    timerDispatch({ type: "SHOW-TIMER"});
+    timerDispatch({ type: "TIMER-STARTED" });
+    timerDispatch({ type: "SHOW-TIMER" });
   };
 
   if (isTimerMode === false) {
@@ -49,9 +53,9 @@ const Timer: React.FC<ITimerProps> = props => {
   if (time < 0) {
     reset();
     // handle setting score here
-    timerDispatch({ type: "TIMER-FINISHED"});
-    timerDispatch({ type: "HIDE-TIMER"});
-    timerDispatch({ type: "TOGGLE-TIMER-MODE"});
+    timerDispatch({ type: "TIMER-FINISHED" });
+    timerDispatch({ type: "HIDE-TIMER" });
+    timerDispatch({ type: "TOGGLE-TIMER-MODE" });
   }
 
   return shouldDisplayTimer === false ? (
