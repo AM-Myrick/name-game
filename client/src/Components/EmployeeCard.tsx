@@ -19,7 +19,6 @@ interface IEmployeeCardProps {
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 320,
-    transition: "border .25s ease-in-out",
     width: "100%",
     margin: "0 auto",
     marginBottom: "10px",
@@ -33,17 +32,20 @@ const useStyles = makeStyles(theme => ({
       width: "calc(20% - 10px)"
     }
   },
+  cardText: {
+    minHeight: "64px"
+  },
   media: {
     height: 200,
     [theme.breakpoints.up(700)]: {
       height: 320
     }
   },
-  incorrect: {
-    border: "5px solid red"
-  },
   hidden: {
     visibility: "hidden"
+  },
+  incorrect: {
+    backgroundColor: "rgba(255,0,0,0.5)",
   }
 }));
 
@@ -62,12 +64,12 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
   const handleClick = () => {
     if (employeeName === answer) {
       setShowName(true);
-      props.scoreDispatch({ type: "INCREMENT-CORRECT" })
+      props.scoreDispatch({ type: "INCREMENT-CORRECT" });
       props.startNextRound();
     } else if (employeeName !== answer && showName === false) {
       setShowName(true);
       setIsCorrectAnswer(false);
-      props.scoreDispatch({ type: "INCREMENT-INCORRECT" })
+      props.scoreDispatch({ type: "INCREMENT-INCORRECT" });
     }
   };
 
@@ -84,10 +86,13 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
         <CardMedia className={classes.media} image={url} title={alt} />
         <CardContent>
           <Typography
-            gutterBottom
             variant="h5"
             component="h2"
-            className={showName === false ? classes.hidden : undefined}
+            className={
+              showName === false
+                ? `${classes.hidden} ${classes.cardText}`
+                : classes.cardText
+            }
           >
             {employeeName}
           </Typography>
@@ -95,12 +100,23 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
             variant="body2"
             color="textSecondary"
             component="p"
-            className={showName === false ? classes.hidden : undefined}
+            className={
+              showName === false
+                ? `${classes.hidden} ${classes.cardText}`
+                : classes.cardText
+            }
           >
             {jobTitle}
           </Typography>
         </CardContent>
       </CardActionArea>
+      <div
+        className={
+          isCorrectAnswer === false
+            ? `${classes.incorrect}`
+            : undefined
+        }
+      ></div>
     </Card>
   );
 };
