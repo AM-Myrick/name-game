@@ -37,7 +37,9 @@ const Timer: React.FC<ITimerProps> = props => {
   const { timerDispatch } = props;
 
   React.useEffect(() => {
-    startTimer();
+    if (shouldRestartTimer === true) {
+      startTimer();
+    }
   }, [shouldRestartTimer]);
 
   const startTimer = () => {

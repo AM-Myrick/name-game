@@ -19,13 +19,13 @@ export const timerReducer = (state: ITimerState, action: any) => {
     case "TIMER-FINISHED":
       return { ...state, isTimerDone: true };
     case "TIMER-STARTED":
-      return { ...state, isTimerDone: false };
+      return { ...state, isTimerDone: false, shouldRestartTimer: false };
     case "HIDE-TIMER":
       return { ...state, shouldDisplayTimer: false };
     case "SHOW-TIMER":
       return { ...state, shouldDisplayTimer: true };
     case "RESTART-TIMER":
-      return { ...state, shouldRestartTimer: !state.shouldRestartTimer };
+      return { ...state, shouldRestartTimer: true };
     default:
       return state;
   }
