@@ -1,15 +1,13 @@
 import React, { useReducer } from "react";
-import NameGame from "./Components/NameGame";
 import Header from "./Components/Header";
 import GameOptions from "./Components/GameOptions";
 import GameResults from "./Components/GameResults";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-import { Switch, Route } from "react-router-dom";
 import { initialScoreState, scoreReducer } from "./Reducers/scoreReducer";
 import { initialTimerState, timerReducer } from "./Reducers/timerReducer";
 import { initialGameState, gameReducer } from "./Reducers/gameReducer";
-import ScoresPage from "./Components/ScoresPage";
+import RouteComponent from "./Components/Routes";
 
 const App: React.FC = props => {
   const [numOfResults, setNumOfResults] = React.useState<number>(5);
@@ -27,8 +25,6 @@ const App: React.FC = props => {
   return (
     <Box>
       <Header
-        timerDispatch={timerDispatch}
-        timerState={timerState}
         gameDispatch={gameDispatch}
         gameState={gameState}
       />
@@ -42,65 +38,14 @@ const App: React.FC = props => {
           gameState={gameState}
           shouldHide={shouldHide}
         />
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={props => (
-              <NameGame
-                {...props}
-                timerState={timerState}
-                scoreDispatch={scoreDispatch}
-                numOfResults={numOfResults}
-                setShouldHide={setShouldHide}
-                gameState={gameState}
-                gameDispatch={gameDispatch}
-                gameMode="all"
-              />
-            )}
-          />
-          <Route
-            path="/current-employees"
-            render={props => (
-              <NameGame
-                {...props}
-                timerState={timerState}
-                scoreDispatch={scoreDispatch}
-                numOfResults={numOfResults}
-                setShouldHide={setShouldHide}
-                gameState={gameState}
-                gameDispatch={gameDispatch}
-                gameMode="current"
-              />
-            )}
-          />
-          <Route
-            path="/mat-employees"
-            render={props => (
-              <NameGame
-                {...props}
-                timerState={timerState}
-                scoreDispatch={scoreDispatch}
-                numOfResults={numOfResults}
-                setShouldHide={setShouldHide}
-                gameState={gameState}
-                gameDispatch={gameDispatch}
-                gameMode="mat"
-              />
-            )}
-          />
-          <Route
-            path="/scores"
-            render={props => (
-              <ScoresPage
-                {...props}
-                setShouldHide={setShouldHide}
-                gameState={gameState}
-                gameDispatch={gameDispatch}
-              />
-            )}
-          />
-        </Switch>
+        <RouteComponent
+          numOfResults={numOfResults}
+          scoreDispatch={scoreDispatch}
+          timerState={timerState}
+          setShouldHide={setShouldHide}
+          gameState={gameState}
+          gameDispatch={gameDispatch}
+        />
         <GameResults
           scoreState={scoreState}
           scoreDispatch={scoreDispatch}

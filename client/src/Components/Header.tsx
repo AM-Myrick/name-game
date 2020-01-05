@@ -6,8 +6,6 @@ import NavMenu from "./NavMenu";
 import "../Styles/Header.css";
 
 export interface IHeaderProps {
-  timerDispatch: Dispatch<any>;
-  timerState: any;
   gameDispatch: Dispatch<any>;
   gameState: any;
 }
@@ -17,8 +15,6 @@ const Header: React.FC<IHeaderProps> = props => {
     <AppBar position="static">
       <Toolbar className="Toolbar">
         <NavMenu
-          timerDispatch={props.timerDispatch}
-          timerState={props.timerState}
           gameDispatch={props.gameDispatch}
           gameState={props.gameState}
         />
