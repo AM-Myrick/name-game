@@ -1,4 +1,5 @@
 import React, { Dispatch } from "react";
+import DisabledCard from "./DisabledCard";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -79,30 +80,7 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
 
   // when the game is over, show employee names and titles, make clicking no longer affect scores
   if (disabled) {
-    return (
-      <Card className={classes.card}>
-        <CardActionArea>
-          <CardMedia className={classes.media} image={url} title={alt} />
-          <CardContent>
-            <Typography
-              variant="h5"
-              component="h2"
-              className={classes.cardTitle}
-            >
-              {employeeName}
-            </Typography>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              component="p"
-              className={classes.cardText}
-            >
-              {jobTitle}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
-    );
+    return <DisabledCard classes={classes} employee={employee} />;
   }
 
   // while the game is being played, display a fully interactive card
