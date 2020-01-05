@@ -21,6 +21,7 @@ interface INameGameProps {
   scoreDispatch: Dispatch<any>;
   setShouldHide: React.Dispatch<React.SetStateAction<boolean>>;
   gameState: IGameState;
+  gameDispatch: Dispatch<any>;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -76,19 +77,22 @@ const NameGame: React.FC<INameGameProps> = props => {
   const [selectedEmployees, setSelectedEmployees] = React.useState<Employee[]>(
     []
   );
-  props.setShouldHide(false);
+  const { setShouldHide, gameMode, numOfResults, gameDispatch, scoreDispatch } = props;
+  const { shouldRestartTimer } = props.timerState;
+  const { isGameOver } = props.gameState;
+  setShouldHide(false);
 
   // data is fetched on mount and whenever gameMode or numOfResults changes
   React.useEffect(() => {
     getData();
-  }, [props.gameMode, props.numOfResults]);
+  }, [gameMode, numOfResults]);
 
   // data is also fetched when shouldRestartTimer is true
   React.useEffect(() => {
-    if (props.timerState.shouldRestartTimer) {
+    if (shouldRestartTimer) {
       getData();
     }
-  }, [props.timerState.shouldRestartTimer]);
+  }, [shouldRestartTimer]);
 
   // set local state to initial values to avoid props being carried over
   const cleanState = () => {
@@ -99,18 +103,19 @@ const NameGame: React.FC<INameGameProps> = props => {
   };
 
   const getData = async () => {
+    gameDispatch({ type: "SWITCH-GAME-MODE", gameMode })
     let response;
-    switch (props.gameMode) {
+    switch (gameMode) {
       case "all":
-        response = await axios.get(`/api/all-employees/${props.numOfResults}`);
+        response = await axios.get(`/api/all-employees/${numOfResults}`);
         break;
       case "current":
         response = await axios.get(
-          `/api/current-employees/${props.numOfResults}`
+          `/api/current-employees/${numOfResults}`
         );
         break;
       case "mat":
-        response = await axios.get(`/api/mat-employees/${props.numOfResults}`);
+        response = await axios.get(`/api/mat-employees/${numOfResults}`);
         break;
     }
     if (response) {
@@ -126,7 +131,7 @@ const NameGame: React.FC<INameGameProps> = props => {
   if (answer === "" || selectedEmployees.length === 0) {
     // create an array of the same length as selectedEmployees to iterate over and create progress indicators
     const indicatorArray: number[] = Array.from(
-      Array(props.numOfResults).keys()
+      Array(numOfResults).keys()
     );
     
     return (
@@ -156,8 +161,8 @@ const NameGame: React.FC<INameGameProps> = props => {
             employee={employee}
             answer={answer}
             startNextRound={getData}
-            scoreDispatch={props.scoreDispatch}
-            disabled={props.gameState.isGameOver}
+            scoreDispatch={scoreDispatch}
+            disabled={isGameOver}
           />
         ))}
       </Box>

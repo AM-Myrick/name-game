@@ -37,6 +37,7 @@ const RouteComponent: React.FC<IRouteComponentProps> = props => {
             numOfResults={numOfResults}
             setShouldHide={setShouldHide}
             gameState={gameState}
+            gameDispatch={gameDispatch}
             gameMode="all"
           />
         )}
@@ -51,6 +52,7 @@ const RouteComponent: React.FC<IRouteComponentProps> = props => {
             numOfResults={numOfResults}
             setShouldHide={setShouldHide}
             gameState={gameState}
+            gameDispatch={gameDispatch}
             gameMode="current"
           />
         )}
@@ -65,6 +67,7 @@ const RouteComponent: React.FC<IRouteComponentProps> = props => {
             numOfResults={numOfResults}
             setShouldHide={setShouldHide}
             gameState={gameState}
+            gameDispatch={gameDispatch}
             gameMode="mat"
           />
         )}

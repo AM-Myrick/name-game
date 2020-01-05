@@ -1,11 +1,13 @@
 export interface IGameState {
   isGameOver: boolean;
   shouldDisplayGameOptions: boolean;
+  gameMode: "mat" | "all" | "current" | null;
 }
 
 export const initialGameState: IGameState = {
   isGameOver: false,
-  shouldDisplayGameOptions: true
+  shouldDisplayGameOptions: true,
+  gameMode: null
 };
 
 export const gameReducer = (state: IGameState, action: any) => {
@@ -21,6 +23,8 @@ export const gameReducer = (state: IGameState, action: any) => {
       };
     case "RESET-GAME-STATE":
       return { ...initialGameState };
+    case "SWITCH-GAME-MODE":
+      return { ...state, gameMode: action.gameMode };
     default:
       return state;
   }

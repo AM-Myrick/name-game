@@ -27,8 +27,8 @@ const useStyles = makeStyles(theme => ({
 
 const GameOptions: React.FC<IGameOptionProps> = props => {
   const classes = useStyles();
-  const { shouldHide } = props;
-  const { shouldDisplayGameOptions } = props.gameState;
+  const { shouldHide, numOfResults, setNumOfResults, timerDispatch, timerState, gameDispatch, gameState } = props;
+  const { shouldDisplayGameOptions } = gameState;
 
   if (shouldDisplayGameOptions === false || shouldHide) {
     return null;
@@ -37,13 +37,14 @@ const GameOptions: React.FC<IGameOptionProps> = props => {
   return (
     <Box className={classes.box}>
       <NumOfResultsSelect
-        numOfResults={props.numOfResults}
-        setNumOfResults={props.setNumOfResults}
+        numOfResults={numOfResults}
+        setNumOfResults={setNumOfResults}
+        gameState={gameState}
       />
       <Timer
-        timerDispatch={props.timerDispatch}
-        timerState={props.timerState}
-        gameDispatch={props.gameDispatch}
+        timerDispatch={timerDispatch}
+        timerState={timerState}
+        gameDispatch={gameDispatch}
       />
     </Box>
   );
