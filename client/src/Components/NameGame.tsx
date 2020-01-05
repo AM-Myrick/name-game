@@ -23,7 +23,7 @@ interface INameGameProps {
   gameState: IGameState;
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   centerText: {
     margin: "20px 0",
     textAlign: "center"
@@ -33,12 +33,42 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
     flexWrap: "wrap"
   },
-  centerLoader: {
+  progressDisplay: {
+    width: "100%",
+    marginTop: "40px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    [theme.breakpoints.up(500)]: {
+       flexDirection: "unset",
+       alignItems: "unset"
+    }
+  },
+  centerProgress: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    flexWrap: "wrap"
+  },
+  progressColor: {
+    color: "#1AD9C3"
+  },
+  progressStyles: {
+    marginBottom: "20px",
+    [theme.breakpoints.up(500)]: {
+       marginLeft: "20%",
+       marginRight: "20%"
+    },
+    [theme.breakpoints.up(700)]: {
+      marginLeft: "12%",
+      marginRight: "12%"
+   },
+   [theme.breakpoints.up(1100)]: {
+     marginLeft: "7%",
+     marginRight: "7%"
   }
-});
+  }
+}));
 
 const NameGame: React.FC<INameGameProps> = props => {
   const classes = useStyles();
@@ -48,10 +78,25 @@ const NameGame: React.FC<INameGameProps> = props => {
   );
   props.setShouldHide(false);
 
-  // data is fetched on mount and whenever gameMode, numOfResults, or shouldRestartTimer changes
+  // data is fetched on mount and whenever gameMode or numOfResults changes
   React.useEffect(() => {
     getData();
-  }, [props.gameMode, props.numOfResults, props.timerState.shouldRestartTimer]);
+  }, [props.gameMode, props.numOfResults]);
+
+  // data is also fetched when shouldRestartTimer is true
+  React.useEffect(() => {
+    if (props.timerState.shouldRestartTimer) {
+      getData();
+    }
+  }, [props.timerState.shouldRestartTimer]);
+
+  // set local state to initial values to avoid props being carried over
+  const cleanState = () => {
+    if (answer || selectedEmployees) {
+      setAnswer("");
+      setSelectedEmployees([]);
+    }
+  };
 
   const getData = async () => {
     let response;
@@ -69,6 +114,7 @@ const NameGame: React.FC<INameGameProps> = props => {
         break;
     }
     if (response) {
+      cleanState();
       const { answer, selectedEmployees } = response.data;
       setAnswer(answer);
       setSelectedEmployees(selectedEmployees);
@@ -77,10 +123,23 @@ const NameGame: React.FC<INameGameProps> = props => {
     }
   };
 
-  if (answer === "") {
+  if (answer === "" || selectedEmployees.length === 0) {
+    // create an array of the same length as selectedEmployees to iterate over and create progress indicators
+    const indicatorArray: number[] = Array.from(
+      Array(props.numOfResults).keys()
+    );
+    
     return (
-      <Box className={classes.centerLoader}>
-        <CircularProgress />
+      <Box className={classes.centerProgress}>
+        <CircularProgress className={classes.progressColor} />
+        <Box className={`${classes.cardDisplay} ${classes.progressDisplay}`}>
+          {indicatorArray.map(indicator => (
+            <CircularProgress
+              className={`${classes.progressStyles} ${classes.progressColor}`}
+              key={indicator}
+            />
+          ))}
+        </Box>
       </Box>
     );
   }
