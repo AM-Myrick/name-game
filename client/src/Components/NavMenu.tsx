@@ -52,6 +52,9 @@ const NavMenu: React.FC<IHeaderProps> = props => {
         <MenuItem onClick={handleClose} component={Link} to="/mat-employees">
           Mat* Only
         </MenuItem>
+        <MenuItem onClick={handleClose} component={Link} to="/scores">
+          See Scores
+        </MenuItem>
         {shouldDisplayGameOptions ? (
           <MenuItem onClick={handleGameOptions}>Hide Game Options</MenuItem>
         ) : (

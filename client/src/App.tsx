@@ -9,9 +9,11 @@ import { Switch, Route } from "react-router-dom";
 import { initialScoreState, scoreReducer } from "./Reducers/scoreReducer";
 import { initialTimerState, timerReducer } from "./Reducers/timerReducer";
 import { initialGameState, gameReducer } from "./Reducers/gameReducer";
+import ScoresPage from "./Components/ScoresPage";
 
 const App: React.FC = props => {
   const [numOfResults, setNumOfResults] = React.useState<number>(5);
+  const [shouldHide, setShouldHide] = React.useState<boolean>(true);
   const [scoreState, scoreDispatch] = useReducer(
     scoreReducer,
     initialScoreState
@@ -38,6 +40,7 @@ const App: React.FC = props => {
           timerState={timerState}
           gameDispatch={gameDispatch}
           gameState={gameState}
+          shouldHide={shouldHide}
         />
         <Switch>
           <Route
@@ -49,6 +52,9 @@ const App: React.FC = props => {
                 timerState={timerState}
                 scoreDispatch={scoreDispatch}
                 numOfResults={numOfResults}
+                setShouldHide={setShouldHide}
+                gameState={gameState}
+                gameDispatch={gameDispatch}
                 gameMode="all"
               />
             )}
@@ -61,6 +67,9 @@ const App: React.FC = props => {
                 timerState={timerState}
                 scoreDispatch={scoreDispatch}
                 numOfResults={numOfResults}
+                setShouldHide={setShouldHide}
+                gameState={gameState}
+                gameDispatch={gameDispatch}
                 gameMode="current"
               />
             )}
@@ -73,7 +82,21 @@ const App: React.FC = props => {
                 timerState={timerState}
                 scoreDispatch={scoreDispatch}
                 numOfResults={numOfResults}
+                setShouldHide={setShouldHide}
+                gameState={gameState}
+                gameDispatch={gameDispatch}
                 gameMode="mat"
+              />
+            )}
+          />
+          <Route
+            path="/scores"
+            render={props => (
+              <ScoresPage
+                {...props}
+                setShouldHide={setShouldHide}
+                gameState={gameState}
+                gameDispatch={gameDispatch}
               />
             )}
           />
@@ -83,6 +106,10 @@ const App: React.FC = props => {
           scoreDispatch={scoreDispatch}
           timerState={timerState}
           timerDispatch={timerDispatch}
+          shouldHide={shouldHide}
+          setShouldHide={setShouldHide}
+          gameState={gameState}
+          gameDispatch={gameDispatch}
         />
       </Container>
     </Box>

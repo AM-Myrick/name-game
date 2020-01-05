@@ -6,10 +6,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import AccessAlarmsOutlinedIcon from "@material-ui/icons/AccessAlarmsOutlined";
 import Badge from "@material-ui/core/Badge";
 import { ITimerState } from "../Reducers/timerReducer";
+import { IGameState } from "../Reducers/gameReducer";
 
 interface ITimerProps {
   timerState: ITimerState;
   timerDispatch: Dispatch<any>;
+  gameState: IGameState;
+  gameDispatch: Dispatch<any>;
 }
 
 const useStyles = makeStyles({
@@ -30,15 +33,16 @@ const useStyles = makeStyles({
 const Timer: React.FC<ITimerProps> = props => {
   const classes = useStyles();
   const { time, start, reset } = useTimer({
-    initialTime: 60,
+    initialTime: 1,
     timerType: "DECREMENTAL"
   });
+  const { isGameOver } = props.gameState;
   const { shouldDisplayTimer, shouldRestartTimer } = props.timerState;
-  const { timerDispatch } = props;
+  const { timerDispatch, gameDispatch } = props;
 
   // avoids timer starting on component mount, but allows it to restart when needed
   React.useEffect(() => {
-    if (shouldRestartTimer === true) {
+    if (shouldRestartTimer) {
       startTimer();
     }
   }, [shouldRestartTimer]);
@@ -46,6 +50,8 @@ const Timer: React.FC<ITimerProps> = props => {
   // starts timer and changes view to a ticking clock
   const startTimer = () => {
     start();
+    timerDispatch({ type: "RESTART-TIMER" });
+    gameDispatch({ type: "GAME-RESET" })
     timerDispatch({ type: "TIMER-STARTED" });
     timerDispatch({ type: "SHOW-TIMER" });
   };
@@ -53,6 +59,7 @@ const Timer: React.FC<ITimerProps> = props => {
   // ends timer and changes view back to start button
   if (time < 0) {
     reset();
+    gameDispatch({ type: "GAME-OVER" })
     timerDispatch({ type: "TIMER-FINISHED" });
     timerDispatch({ type: "HIDE-TIMER" });
     timerDispatch({ type: "TOGGLE-TIMER-MODE" });

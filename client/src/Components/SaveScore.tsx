@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 export interface ISaveScoreProps {
   scoreState: IScoreState;
   scoreDispatch: Dispatch<any>;
+  timerDispatch: Dispatch<any>;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -18,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     width: "100%",
     [theme.breakpoints.up(533)]: {
-        width: "unset",
+      width: "unset",
       margin: "0",
       marginRight: "20px"
     }

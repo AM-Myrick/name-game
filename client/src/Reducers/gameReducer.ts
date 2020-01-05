@@ -19,6 +19,8 @@ export const gameReducer = (state: IGameState, action: any) => {
         ...state,
         shouldDisplayGameOptions: !state.shouldDisplayGameOptions
       };
+    case "RESET-GAME-STATE":
+      return { ...initialGameState };
     default:
       return state;
   }

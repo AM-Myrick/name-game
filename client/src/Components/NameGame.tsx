@@ -7,6 +7,7 @@ import EmployeeCard from "./EmployeeCard";
 import Typography from "@material-ui/core/Typography";
 import { ITimerState } from "../Reducers/timerReducer";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { IGameState } from "../Reducers/gameReducer";
 
 axios.defaults.baseURL =
   process.env.NODE_ENV === "development"
@@ -18,6 +19,9 @@ interface INameGameProps {
   numOfResults: number;
   timerState: ITimerState;
   scoreDispatch: Dispatch<any>;
+  setShouldHide: React.Dispatch<React.SetStateAction<boolean>>;
+  gameState: IGameState;
+  gameDispatch: Dispatch<any>;
 }
 
 const useStyles = makeStyles({
@@ -44,6 +48,7 @@ const NameGame: React.FC<INameGameProps> = props => {
     []
   );
 
+  props.setShouldHide(false);
   // data is fetched on mount and whenever gameMode, numOfResults, or shouldRestartTimer changes
   React.useEffect(() => {
     getData();
@@ -94,7 +99,7 @@ const NameGame: React.FC<INameGameProps> = props => {
             answer={answer}
             startNextRound={getData}
             scoreDispatch={props.scoreDispatch}
-            disabled={props.timerState.isTimerDone}
+            disabled={props.gameState.isGameOver}
           />
         ))}
       </Box>

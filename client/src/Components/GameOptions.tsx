@@ -4,6 +4,7 @@ import { ITimerState } from "../Reducers/timerReducer";
 import NumOfResultsSelect from "./NumOfResultsSelect";
 import Timer from "./Timer";
 import Box from "@material-ui/core/Box";
+import { IGameState } from "../Reducers/gameReducer";
 
 interface IGameOptionProps {
   numOfResults: number;
@@ -11,7 +12,8 @@ interface IGameOptionProps {
   timerDispatch: Dispatch<any>;
   timerState: ITimerState;
   gameDispatch: Dispatch<any>;
-  gameState: any;
+  gameState: IGameState;
+  shouldHide: boolean;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -25,9 +27,10 @@ const useStyles = makeStyles(theme => ({
 
 const GameOptions: React.FC<IGameOptionProps> = props => {
   const classes = useStyles();
+  const { shouldHide } = props;
   const {shouldDisplayGameOptions} = props.gameState;
 
-  if (shouldDisplayGameOptions === false) {
+  if (shouldDisplayGameOptions === false || shouldHide) {
       return null;
   }
 
@@ -40,6 +43,8 @@ const GameOptions: React.FC<IGameOptionProps> = props => {
       <Timer
         timerDispatch={props.timerDispatch}
         timerState={props.timerState}
+        gameDispatch={props.gameDispatch}
+        gameState={props.gameState}
       />
     </Box>
   );
