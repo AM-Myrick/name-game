@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import React, { Dispatch, useEffect, SetStateAction, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import Employee from "../Models/Employee";
@@ -19,7 +19,7 @@ interface INameGameProps {
   numOfResults: number;
   timerState: ITimerState;
   scoreDispatch: Dispatch<{ type: string }>;
-  setShouldHide: React.Dispatch<React.SetStateAction<boolean>>;
+  setShouldHide: Dispatch<SetStateAction<boolean>>;
   gameState: IGameState;
   gameDispatch: Dispatch<{ type: string, gameMode?: string | undefined }>;
 }
@@ -73,8 +73,8 @@ const useStyles = makeStyles(theme => ({
 
 const NameGame: React.FC<INameGameProps> = props => {
   const classes = useStyles();
-  const [answer, setAnswer] = React.useState<string>("");
-  const [selectedEmployees, setSelectedEmployees] = React.useState<Employee[]>(
+  const [answer, setAnswer] = useState<string>("");
+  const [selectedEmployees, setSelectedEmployees] = useState<Employee[]>(
     []
   );
   const { setShouldHide, gameMode, numOfResults, gameDispatch, scoreDispatch } = props;
@@ -83,12 +83,12 @@ const NameGame: React.FC<INameGameProps> = props => {
   setShouldHide(false);
 
   // data is fetched on mount and whenever gameMode or numOfResults changes
-  React.useEffect(() => {
+  useEffect(() => {
     getData();
   }, [gameMode, numOfResults]);
 
   // data is also fetched when shouldRestartTimer is true
-  React.useEffect(() => {
+  useEffect(() => {
     if (shouldRestartTimer) {
       getData();
     }

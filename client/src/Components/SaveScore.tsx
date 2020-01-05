@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEvent, FormEvent } from "react";
+import React, { ChangeEvent, MouseEvent, FormEvent, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { IScoreState } from "../Reducers/scoreReducer";
 import TextField from "@material-ui/core/TextField";
@@ -26,8 +26,8 @@ const useStyles = makeStyles(theme => ({
 
 const SaveScore: React.FC<ISaveScoreProps> = props => {
   const classes = useStyles();
-  const [textFieldValue, setTextFieldValue] = React.useState<string>("");
-  const [savedScore, setSavedScore] = React.useState<boolean>(false);
+  const [textFieldValue, setTextFieldValue] = useState<string>("");
+  const [savedScore, setSavedScore] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<any>) =>
     setTextFieldValue(e.target.value);

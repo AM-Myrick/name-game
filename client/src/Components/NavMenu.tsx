@@ -1,4 +1,4 @@
-import React, { MouseEvent } from "react";
+import React, { MouseEvent, useState } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "@material-ui/core/Menu";
@@ -8,7 +8,7 @@ import { IHeaderProps } from "./Header";
 
 const NavMenu: React.FC<IHeaderProps> = props => {
   // local state to handle opening and closing menu
-  const [anchorEl, setAnchorEl] = React.useState<null | Element>(null);
+  const [anchorEl, setAnchorEl] = useState<null | Element>(null);
   const { gameDispatch, gameState } = props;
   const { shouldDisplayGameOptions } = gameState;
 

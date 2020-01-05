@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import Header from "./Components/Header";
 import GameOptions from "./Components/GameOptions";
 import GameResults from "./Components/GameResults";
@@ -10,8 +10,8 @@ import { initialGameState, gameReducer } from "./Reducers/gameReducer";
 import RouteComponent from "./Components/Routes";
 
 const App: React.FC = props => {
-  const [numOfResults, setNumOfResults] = React.useState<number>(5);
-  const [shouldHide, setShouldHide] = React.useState<boolean>(true);
+  const [numOfResults, setNumOfResults] = useState<number>(5);
+  const [shouldHide, setShouldHide] = useState<boolean>(true);
   const [scoreState, scoreDispatch] = useReducer(
     scoreReducer,
     initialScoreState

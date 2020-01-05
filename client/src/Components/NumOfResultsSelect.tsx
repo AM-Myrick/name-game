@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect, Dispatch, SetStateAction } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
@@ -10,7 +10,7 @@ import MatResultsSelect from "./MatResultsSelect";
 
 export interface IResultsProps {
   numOfResults: number;
-  setNumOfResults: React.Dispatch<React.SetStateAction<number>>;
+  setNumOfResults: Dispatch<SetStateAction<number>>;
   gameState: IGameState;
 }
 
@@ -27,6 +27,15 @@ const NumOfResultsSelect: React.FC<IResultsProps> = props => {
   const { numOfResults, setNumOfResults, gameState } = props;
   const handleChange = (event: ChangeEvent<any>) => setNumOfResults(event.target.value);
 
+  useEffect(() => {
+    if (numOfResults === 12 && gameState.gameMode !== "mat") {
+      setNumOfResults(5);
+    }
+    if (numOfResults > 12 && gameState.gameMode === "mat") {
+      setNumOfResults(5);
+    }
+  });
+
   if (gameState.gameMode === "mat") {
     return (
       <MatResultsSelect
@@ -35,8 +44,6 @@ const NumOfResultsSelect: React.FC<IResultsProps> = props => {
         handleChange={handleChange}
       />
     );
-  } else {
-    setNumOfResults(5);
   }
 
   return (

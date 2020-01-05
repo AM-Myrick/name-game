@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import NameGame from "./NameGame";
 import { Switch, Route } from "react-router-dom";
 import ScoresPage from "./ScoresPage";
@@ -9,7 +9,7 @@ interface IRouteComponentProps {
   numOfResults: number;
   timerState: ITimerState;
   scoreDispatch: Dispatch<{ type: string }>;
-  setShouldHide: React.Dispatch<React.SetStateAction<boolean>>;
+  setShouldHide: Dispatch<SetStateAction<boolean>>;
   gameState: IGameState;
   gameDispatch: Dispatch<{ type: string }>;
 }

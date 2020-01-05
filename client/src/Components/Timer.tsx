@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import React, { Dispatch, useEffect } from "react";
 import Box from "@material-ui/core/Box";
 import { useTimer } from "use-timer";
 import Button from "@material-ui/core/Button";
@@ -39,7 +39,7 @@ const Timer: React.FC<ITimerProps> = props => {
   const { timerDispatch, gameDispatch } = props;
 
   // avoids timer starting on component mount, but allows it to restart when needed
-  React.useEffect(() => {
+  useEffect(() => {
     if (shouldRestartTimer) {
       startTimer();
     }

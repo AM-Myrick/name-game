@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import React, { Dispatch, useEffect, SetStateAction } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import ScoresTable from "./ScoresTable";
 import Scores from "../Models/Scores";
 
 interface IScoresPageProps {
-  setShouldHide: React.Dispatch<React.SetStateAction<boolean>>;
+  setShouldHide: Dispatch<SetStateAction<boolean>>;
   gameDispatch: Dispatch<{ type: string }>;
   gameState: IGameState;
 }
@@ -35,7 +35,7 @@ const ScoresPage: React.FC<IScoresPageProps> = props => {
   const { gameDispatch, setShouldHide } = props;
   let scores = localStorage.getItem("wtQuizScores");
 
-  React.useEffect(() => {
+  useEffect(() => {
     gameDispatch({ type: "RESET-GAME-STATE" });
   }, []);
   setShouldHide(true);

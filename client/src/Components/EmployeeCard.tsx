@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import React, { Dispatch, useState } from "react";
 import DisabledCard from "./DisabledCard";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -60,10 +60,10 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
   const employeeName = `${firstName} ${lastName}`;
 
   // local state to handle UI updates for incorrect answers and showing names
-  const [isCorrectAnswer, setIsCorrectAnswer] = React.useState<null | boolean>(
+  const [isCorrectAnswer, setIsCorrectAnswer] = useState<null | boolean>(
     null
   );
-  const [showName, setShowName] = React.useState<boolean>(false);
+  const [showName, setShowName] = useState<boolean>(false);
 
   // when a card is clicked, show employee's name and title and increment the appropriate score state
   const handleClick = () => {

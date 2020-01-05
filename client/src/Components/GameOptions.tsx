@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { ITimerState } from "../Reducers/timerReducer";
 import NumOfResultsSelect from "./NumOfResultsSelect";
@@ -8,7 +8,7 @@ import { IGameState } from "../Reducers/gameReducer";
 
 interface IGameOptionProps {
   numOfResults: number;
-  setNumOfResults: React.Dispatch<React.SetStateAction<number>>;
+  setNumOfResults: Dispatch<SetStateAction<number>>;
   timerDispatch: Dispatch<{ type: string }>;
   timerState: ITimerState;
   gameDispatch: Dispatch<{ type: string }>;
