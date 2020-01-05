@@ -1,0 +1,1 @@
+worker: sh -c 'cd ./back-end/ && yarn start'
