@@ -81,6 +81,7 @@ const NameGame: React.FC<INameGameProps> = props => {
             answer={answer}
             startNextRound={getData}
             scoreDispatch={props.scoreDispatch}
+            disabled={props.timerState.isTimerDone}
           />
         ))}
       </Box>

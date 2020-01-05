@@ -1,4 +1,4 @@
-import React, { Dispatch, useReducer, useEffect } from "react";
+import React, { Dispatch } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { ITimerState } from "../Reducers/timerReducer";
 import NumOfResultsSelect from "./NumOfResultsSelect";
@@ -20,9 +20,6 @@ const useStyles = makeStyles(theme => ({
       display: "flex",
       justifyContent: "space-around"
     }
-  },
-  hide: {
-      display: "none"
   }
 }));
 

@@ -14,6 +14,7 @@ interface IEmployeeCardProps {
   answer: string;
   startNextRound: () => Promise<void>;
   scoreDispatch: Dispatch<any>;
+  disabled: boolean;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -45,7 +46,10 @@ const useStyles = makeStyles(theme => ({
     visibility: "hidden"
   },
   incorrect: {
-    backgroundColor: "rgba(255,0,0,0.5)",
+    backgroundColor: "rgba(255,0,0,0.5)"
+  },
+  disabled: {
+    backgroundColor: "rgba(220,220,220,0.5)"
   }
 }));
 
@@ -56,11 +60,12 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
   const employeeName = `${firstName} ${lastName}`;
   const answer = props.answer;
 
+  // local state to handle incorrect answers and showing names
   const [isCorrectAnswer, setIsCorrectAnswer] = React.useState<null | boolean>(
     null
   );
   const [showName, setShowName] = React.useState<boolean>(false);
-
+    
   const handleClick = () => {
     if (employeeName === answer) {
       setShowName(true);
@@ -72,6 +77,34 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
       props.scoreDispatch({ type: "INCREMENT-INCORRECT" });
     }
   };
+
+  if (props.disabled) {
+    return (
+      <Card className={classes.card}>
+        <CardActionArea>
+          <CardMedia className={classes.media} image={url} title={alt} />
+          <CardContent>
+            <Typography
+              variant="h5"
+              component="h2"
+              className={classes.cardText}
+            >
+              {employeeName}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              className={classes.cardText}
+            >
+              {jobTitle}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <div className={classes.disabled}></div>
+      </Card>
+    );
+  }
 
   return (
     <Card
@@ -112,9 +145,7 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
       </CardActionArea>
       <div
         className={
-          isCorrectAnswer === false
-            ? `${classes.incorrect}`
-            : undefined
+          isCorrectAnswer === false ? `${classes.incorrect}` : undefined
         }
       ></div>
     </Card>

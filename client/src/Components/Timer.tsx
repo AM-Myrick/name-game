@@ -36,18 +36,21 @@ const Timer: React.FC<ITimerProps> = props => {
   const { shouldDisplayTimer, shouldRestartTimer } = props.timerState;
   const { timerDispatch } = props;
 
+  // avoids timer starting on component mount, but allows it to restart when needed
   React.useEffect(() => {
     if (shouldRestartTimer === true) {
       startTimer();
     }
   }, [shouldRestartTimer]);
 
+  // starts timer and changes view to a ticking clock
   const startTimer = () => {
     start();
     timerDispatch({ type: "TIMER-STARTED" });
     timerDispatch({ type: "SHOW-TIMER" });
   };
 
+  // ends timer and changes view back to start button
   if (time < 0) {
     reset();
     timerDispatch({ type: "TIMER-FINISHED" });
