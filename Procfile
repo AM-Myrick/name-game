@@ -1,1 +1,0 @@
-node: cd ./back-end/ && yarn start
