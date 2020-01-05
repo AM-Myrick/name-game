@@ -21,13 +21,29 @@ interface INameGameProps {
   scoreDispatch: Dispatch<{ type: string }>;
   setShouldHide: Dispatch<SetStateAction<boolean>>;
   gameState: IGameState;
-  gameDispatch: Dispatch<{ type: string, gameMode?: string | undefined }>;
+  gameDispatch: Dispatch<{ type: string; gameMode?: string | undefined }>;
 }
 
 const useStyles = makeStyles(theme => ({
   centerText: {
-    margin: "20px 0",
-    textAlign: "center"
+    textAlign: "center",
+    position: "fixed",
+    zIndex: 2,
+    width: "100%",
+    left: 0,
+    top: "220px",
+    backgroundColor: "white",
+    [theme.breakpoints.up(350)]: {
+      top: "160px"
+    },
+    [theme.breakpoints.up(1100)]: {
+      position: "unset",
+      width: "unset",
+      margin: "20px 0"
+    }
+  },
+  stickyQuestion: {
+    top: 0
   },
   cardDisplay: {
     display: "flex",
@@ -41,8 +57,8 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     alignItems: "center",
     [theme.breakpoints.up(500)]: {
-       flexDirection: "unset",
-       alignItems: "unset"
+      flexDirection: "unset",
+      alignItems: "unset"
     }
   },
   centerProgress: {
@@ -57,33 +73,43 @@ const useStyles = makeStyles(theme => ({
   progressStyles: {
     marginBottom: "20px",
     [theme.breakpoints.up(500)]: {
-       marginLeft: "20%",
-       marginRight: "20%"
+      marginLeft: "20%",
+      marginRight: "20%"
     },
     [theme.breakpoints.up(700)]: {
       marginLeft: "12%",
       marginRight: "12%"
-   },
-   [theme.breakpoints.up(1100)]: {
-     marginLeft: "7%",
-     marginRight: "7%"
-  }
+    },
+    [theme.breakpoints.up(1100)]: {
+      marginLeft: "7%",
+      marginRight: "7%"
+    }
   }
 }));
 
 const NameGame: React.FC<INameGameProps> = props => {
   const classes = useStyles();
   const [answer, setAnswer] = useState<string>("");
-  const [selectedEmployees, setSelectedEmployees] = useState<Employee[]>(
-    []
-  );
-  const { setShouldHide, gameMode, numOfResults, gameDispatch, scoreDispatch } = props;
+  const [selectedEmployees, setSelectedEmployees] = useState<Employee[]>([]);
+  const [scrollHeight, setScrollHeight] = useState<number>(window.scrollY);
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const {
+    setShouldHide,
+    gameMode,
+    numOfResults,
+    gameDispatch,
+    scoreDispatch
+  } = props;
   const { shouldRestartTimer } = props.timerState;
   const { isGameOver } = props.gameState;
   setShouldHide(false);
 
   // data is fetched on mount and whenever gameMode or numOfResults changes
   useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setScrollHeight(window.scrollY);
+      setWindowWidth(window.innerWidth);
+    });
     getData();
   }, [gameMode, numOfResults]);
 
@@ -103,16 +129,14 @@ const NameGame: React.FC<INameGameProps> = props => {
   };
 
   const getData = async () => {
-    gameDispatch({ type: "SWITCH-GAME-MODE", gameMode })
+    gameDispatch({ type: "SWITCH-GAME-MODE", gameMode });
     let response;
     switch (gameMode) {
       case "all":
         response = await axios.get(`/api/all-employees/${numOfResults}`);
         break;
       case "current":
-        response = await axios.get(
-          `/api/current-employees/${numOfResults}`
-        );
+        response = await axios.get(`/api/current-employees/${numOfResults}`);
         break;
       case "mat":
         response = await axios.get(`/api/mat-employees/${numOfResults}`);
@@ -130,10 +154,8 @@ const NameGame: React.FC<INameGameProps> = props => {
 
   if (answer === "" || selectedEmployees.length === 0) {
     // create an array of the same length as selectedEmployees to iterate over and create progress indicators
-    const indicatorArray: number[] = Array.from(
-      Array(numOfResults).keys()
-    );
-    
+    const indicatorArray: number[] = Array.from(Array(numOfResults).keys());
+
     return (
       <Box className={classes.centerProgress}>
         <CircularProgress className={classes.progressColor} />
@@ -151,7 +173,14 @@ const NameGame: React.FC<INameGameProps> = props => {
 
   return (
     <Box>
-      <Typography variant="h4" className={classes.centerText}>
+      <Typography
+        variant="h4"
+        className={
+          scrollHeight > 188 && windowWidth < 1100
+            ? `${classes.centerText} ${classes.stickyQuestion}`
+            : `${classes.centerText}`
+        }
+      >
         {`Who is ${answer}?`}
       </Typography>
       <Box className={classes.cardDisplay}>

@@ -18,9 +18,13 @@ interface IGameOptionProps {
 
 const useStyles = makeStyles(theme => ({
   box: {
+    marginBottom: "120px",
     [theme.breakpoints.up(350)]: {
       display: "flex",
       justifyContent: "space-around"
+    },
+    [theme.breakpoints.up(1100)]: {
+      marginBottom: 0
     }
   }
 }));
