@@ -13,10 +13,27 @@ export interface IGameResultsProps {
   timerDispatch: Dispatch<any>;
 }
 
+const useStyles = makeStyles(theme => ({
+  box: {
+    display: "flex",
+    justifyContent: "center",
+    margin: "20px 0",
+    flexWrap: "wrap",
+    [theme.breakpoints.up(533)]: {
+      justifyContent: "space-around",
+      alignItems: "center"
+    }
+  }
+}));
+
 const GameResults: React.FC<IGameResultsProps> = props => {
+  const classes = useStyles();
   return props.timerState.isTimerDone === true ? (
-    <Box>
-      <SaveScore scoreState={props.scoreState} scoreDispatch={props.scoreDispatch} />
+    <Box className={classes.box}>
+      <SaveScore
+        scoreState={props.scoreState}
+        scoreDispatch={props.scoreDispatch}
+      />
       <RestartGame timerDispatch={props.timerDispatch} />
     </Box>
   ) : null;

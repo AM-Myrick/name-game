@@ -10,7 +10,23 @@ export interface ISaveScoreProps {
   scoreDispatch: Dispatch<any>;
 }
 
+const useStyles = makeStyles(theme => ({
+  form: {
+    marginBottom: "20px",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    width: "100%",
+    [theme.breakpoints.up(533)]: {
+        width: "unset",
+      margin: "0",
+      marginRight: "20px"
+    }
+  }
+}));
+
 const SaveScore: React.FC<ISaveScoreProps> = props => {
+  const classes = useStyles();
   const [textFieldValue, setTextFieldValue] = React.useState<string>("");
   const [savedScore, setSavedScore] = React.useState<boolean>(false);
 
@@ -39,14 +55,19 @@ const SaveScore: React.FC<ISaveScoreProps> = props => {
 
   if (savedScore) {
     return (
-      <Button variant="contained" component={Link} to="/scores">
+      <Button variant="outlined" color="primary" component={Link} to="/scores">
         See Your Score
       </Button>
     );
   }
-  
+
   return (
-    <form noValidate autoComplete="off" onSubmit={e => storeScore(e)}>
+    <form
+      className={classes.form}
+      noValidate
+      autoComplete="off"
+      onSubmit={e => storeScore(e)}
+    >
       <TextField
         id="outlined-basic"
         label="What's your name?"
@@ -55,7 +76,7 @@ const SaveScore: React.FC<ISaveScoreProps> = props => {
         onChange={e => handleChange(e)}
         value={textFieldValue}
       />
-      <Button variant="contained" onClick={e => storeScore(e)}>
+      <Button variant="outlined" color="primary" onClick={e => storeScore(e)}>
         Save Score
       </Button>
     </form>

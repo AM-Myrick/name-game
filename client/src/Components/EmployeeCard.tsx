@@ -8,8 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import Employee from "../Models/Employee";
 
 interface IEmployeeCardProps {
-  index: number;
-  tabIndex: number;
   employee: Employee;
   answer: string;
   startNextRound: () => Promise<void>;
@@ -33,8 +31,11 @@ const useStyles = makeStyles(theme => ({
       width: "calc(20% - 10px)"
     }
   },
-  cardText: {
+  cardTitle: {
     minHeight: "64px"
+  },
+  cardText: {
+    minHeight: "40px"
   },
   media: {
     height: 200,
@@ -47,9 +48,6 @@ const useStyles = makeStyles(theme => ({
   },
   incorrect: {
     backgroundColor: "rgba(255,0,0,0.5)"
-  },
-  disabled: {
-    backgroundColor: "rgba(220,220,220,0.5)"
   }
 }));
 
@@ -65,7 +63,7 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
     null
   );
   const [showName, setShowName] = React.useState<boolean>(false);
-    
+
   const handleClick = () => {
     if (employeeName === answer) {
       setShowName(true);
@@ -78,6 +76,7 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
     }
   };
 
+  // when the game is over, show employee names and titles, make clicking no longer affect scores
   if (props.disabled) {
     return (
       <Card className={classes.card}>
@@ -87,7 +86,7 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
             <Typography
               variant="h5"
               component="h2"
-              className={classes.cardText}
+              className={classes.cardTitle}
             >
               {employeeName}
             </Typography>
@@ -101,7 +100,6 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <div className={classes.disabled}></div>
       </Card>
     );
   }
@@ -123,8 +121,8 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
             component="h2"
             className={
               showName === false
-                ? `${classes.hidden} ${classes.cardText}`
-                : classes.cardText
+                ? `${classes.hidden} ${classes.cardTitle}`
+                : classes.cardTitle
             }
           >
             {employeeName}

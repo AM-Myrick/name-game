@@ -89,9 +89,7 @@ const NameGame: React.FC<INameGameProps> = props => {
       <Box className={classes.cardDisplay}>
         {selectedEmployees.map((employee: Employee, index: number) => (
           <EmployeeCard
-            index={index}
-            tabIndex={index}
-            key={employee.id}
+            key={employee.id + index}
             employee={employee}
             answer={answer}
             startNextRound={getData}

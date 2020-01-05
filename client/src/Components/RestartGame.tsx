@@ -9,7 +9,7 @@ const RestartGame: React.FC<IRestartGameProps> = props => {
   const restartGame = () => props.timerDispatch({ type: "RESTART-TIMER" });
 
   return (
-    <Button variant="contained" onClick={restartGame}>
+    <Button variant="outlined" color="primary" onClick={restartGame}>
       Restart Game
     </Button>
   );
