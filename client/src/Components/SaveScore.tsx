@@ -36,6 +36,7 @@ const SaveScore: React.FC<ISaveScoreProps> = props => {
     e.preventDefault();
     const { correctAnswers, incorrectAnswers } = props.scoreState;
     let quizScores = localStorage.getItem("wtQuizScores");
+
     if (quizScores) {
       const oldScores = JSON.parse(quizScores);
       const newScores = JSON.stringify([
@@ -49,6 +50,7 @@ const SaveScore: React.FC<ISaveScoreProps> = props => {
       ];
       localStorage.setItem("wtQuizScores", JSON.stringify(newScore));
     }
+
     setSavedScore(true);
   };
 

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { IHeaderProps } from "./Header";
 
 const NavMenu: React.FC<IHeaderProps> = props => {
+  // local state to handle opening and closing menu
   const [anchorEl, setAnchorEl] = React.useState<null | Element>(null);
   const { shouldDisplayGameOptions } = props.gameState;
 

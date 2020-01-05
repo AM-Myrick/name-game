@@ -28,10 +28,10 @@ const useStyles = makeStyles(theme => ({
 const GameOptions: React.FC<IGameOptionProps> = props => {
   const classes = useStyles();
   const { shouldHide } = props;
-  const {shouldDisplayGameOptions} = props.gameState;
+  const { shouldDisplayGameOptions } = props.gameState;
 
   if (shouldDisplayGameOptions === false || shouldHide) {
-      return null;
+    return null;
   }
 
   return (

@@ -23,7 +23,7 @@ const RouteComponent: React.FC<IRouteComponentProps> = props => {
     gameState,
     gameDispatch
   } = props;
-  
+
   return (
     <Switch>
       <Route

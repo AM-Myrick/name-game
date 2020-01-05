@@ -44,8 +44,9 @@ const ScoresPage: React.FC<IScoresPageProps> = props => {
   props.setShouldHide(true);
 
   if (scores) {
-    let scoreArray: any[] = JSON.parse(scores);
-    scoreArray = scoreArray.sort((a, b) => b.correctAnswers - a.correctAnswers);
+    const scoreArray: any[] = JSON.parse(scores);
+    // sort scores in descending order by correct answers
+    scoreArray.sort((a, b) => b.correctAnswers - a.correctAnswers);
 
     return (
       <Box className={classes.box}>

@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   centerLoader: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   }
 });
 
@@ -46,8 +46,8 @@ const NameGame: React.FC<INameGameProps> = props => {
   const [selectedEmployees, setSelectedEmployees] = React.useState<Employee[]>(
     []
   );
-
   props.setShouldHide(false);
+
   // data is fetched on mount and whenever gameMode, numOfResults, or shouldRestartTimer changes
   React.useEffect(() => {
     getData();

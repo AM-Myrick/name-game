@@ -31,10 +31,10 @@ const useStyles = makeStyles({
 const Timer: React.FC<ITimerProps> = props => {
   const classes = useStyles();
   const { time, start, reset } = useTimer({
-    initialTime: 1,
+    initialTime: 60,
     timerType: "DECREMENTAL"
   });
-  
+
   const { shouldDisplayTimer, shouldRestartTimer } = props.timerState;
   const { timerDispatch, gameDispatch } = props;
 
@@ -51,7 +51,7 @@ const Timer: React.FC<ITimerProps> = props => {
     if (shouldRestartTimer) {
       timerDispatch({ type: "RESTART-TIMER" });
     }
-    gameDispatch({ type: "GAME-RESET" })
+    gameDispatch({ type: "GAME-RESET" });
     timerDispatch({ type: "TIMER-STARTED" });
     timerDispatch({ type: "SHOW-TIMER" });
   };
@@ -59,23 +59,27 @@ const Timer: React.FC<ITimerProps> = props => {
   // ends timer and changes view back to start button
   if (time < 0) {
     reset();
-    gameDispatch({ type: "GAME-OVER" })
+    gameDispatch({ type: "GAME-OVER" });
     timerDispatch({ type: "TIMER-FINISHED" });
     timerDispatch({ type: "HIDE-TIMER" });
     timerDispatch({ type: "TOGGLE-TIMER-MODE" });
   }
 
-  return shouldDisplayTimer === false ? (
+  if (shouldDisplayTimer) {
+    return (
+      <Box className={classes.timer}>
+        <Badge badgeContent={time} color="primary" showZero={true}>
+          <AccessAlarmsOutlinedIcon fontSize="large" />
+        </Badge>
+      </Box>
+    );
+  }
+
+  return (
     <Box className={classes.box}>
       <Button variant="outlined" color="primary" onClick={startTimer}>
         Start Timer
       </Button>
-    </Box>
-  ) : (
-    <Box className={classes.timer}>
-      <Badge badgeContent={time} color="primary" showZero={true}>
-        <AccessAlarmsOutlinedIcon fontSize="large" />
-      </Badge>
     </Box>
   );
 };

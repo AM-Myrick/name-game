@@ -58,7 +58,7 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
   const employeeName = `${firstName} ${lastName}`;
   const answer = props.answer;
 
-  // local state to handle incorrect answers and showing names
+  // local state to handle UI updates for incorrect answers and showing names
   const [isCorrectAnswer, setIsCorrectAnswer] = React.useState<null | boolean>(
     null
   );
@@ -104,6 +104,7 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
     );
   }
 
+  // while the game is being played, display a fully interactive card
   return (
     <Card
       className={
