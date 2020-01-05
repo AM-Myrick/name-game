@@ -36,7 +36,7 @@ const Timer: React.FC<ITimerProps> = props => {
     initialTime: 1,
     timerType: "DECREMENTAL"
   });
-  const { isGameOver } = props.gameState;
+  
   const { shouldDisplayTimer, shouldRestartTimer } = props.timerState;
   const { timerDispatch, gameDispatch } = props;
 
@@ -50,7 +50,9 @@ const Timer: React.FC<ITimerProps> = props => {
   // starts timer and changes view to a ticking clock
   const startTimer = () => {
     start();
-    timerDispatch({ type: "RESTART-TIMER" });
+    if (shouldRestartTimer) {
+      timerDispatch({ type: "RESTART-TIMER" });
+    }
     gameDispatch({ type: "GAME-RESET" })
     timerDispatch({ type: "TIMER-STARTED" });
     timerDispatch({ type: "SHOW-TIMER" });
