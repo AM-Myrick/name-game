@@ -1,1 +1,1 @@
-worker: sh -c 'cd ./back-end/ && yarn start'
+node: cd ./back-end/ && yarn start
