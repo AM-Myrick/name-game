@@ -6,6 +6,7 @@ import Box from "@material-ui/core/Box";
 import EmployeeCard from "./EmployeeCard";
 import Typography from "@material-ui/core/Typography";
 import { ITimerState } from "../Reducers/timerReducer";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 axios.defaults.baseURL =
   process.env.NODE_ENV === "development"
@@ -20,7 +21,7 @@ interface INameGameProps {
 }
 
 const useStyles = makeStyles({
-  center: {
+  centerText: {
     margin: "20px 0",
     textAlign: "center"
   },
@@ -28,6 +29,11 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "space-between",
     flexWrap: "wrap"
+  },
+  centerLoader: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   }
 });
 
@@ -38,6 +44,7 @@ const NameGame: React.FC<INameGameProps> = props => {
     []
   );
 
+  // data is fetched on mount and whenever gameMode, numOfResults, or shouldRestartTimer changes
   React.useEffect(() => {
     getData();
   }, [props.gameMode, props.numOfResults, props.timerState.shouldRestartTimer]);
@@ -62,13 +69,21 @@ const NameGame: React.FC<INameGameProps> = props => {
       setAnswer(answer);
       setSelectedEmployees(selectedEmployees);
     } else {
-        getData();
+      getData();
     }
   };
 
+  if (answer === "") {
+    return (
+      <Box className={classes.centerLoader}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <Box>
-      <Typography variant="h4" className={classes.center}>
+      <Typography variant="h4" className={classes.centerText}>
         {`Who is ${answer}?`}
       </Typography>
       <Box className={classes.cardDisplay}>

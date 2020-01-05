@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 const Timer: React.FC<ITimerProps> = props => {
   const classes = useStyles();
   const { time, start, reset } = useTimer({
-    initialTime: 1,
+    initialTime: 60,
     timerType: "DECREMENTAL"
   });
   const { shouldDisplayTimer, shouldRestartTimer } = props.timerState;
