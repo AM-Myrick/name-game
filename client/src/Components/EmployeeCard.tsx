@@ -53,10 +53,10 @@ const useStyles = makeStyles(theme => ({
 
 const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
   const classes = useStyles();
-  const { url, alt } = props.employee.headshot;
-  const { firstName, lastName, jobTitle } = props.employee;
+  const { scoreDispatch, startNextRound, disabled, employee, answer } = props;
+  const { firstName, lastName, jobTitle } = employee;
+  const { url, alt } = employee.headshot;
   const employeeName = `${firstName} ${lastName}`;
-  const answer = props.answer;
 
   // local state to handle UI updates for incorrect answers and showing names
   const [isCorrectAnswer, setIsCorrectAnswer] = React.useState<null | boolean>(
@@ -64,20 +64,21 @@ const EmployeeCard: React.FC<IEmployeeCardProps> = props => {
   );
   const [showName, setShowName] = React.useState<boolean>(false);
 
+  // when a card is clicked, show employee's name and title and increment the appropriate score state
   const handleClick = () => {
     if (employeeName === answer) {
       setShowName(true);
-      props.scoreDispatch({ type: "INCREMENT-CORRECT" });
-      props.startNextRound();
+      scoreDispatch({ type: "INCREMENT-CORRECT" });
+      startNextRound();
     } else if (employeeName !== answer && showName === false) {
       setShowName(true);
       setIsCorrectAnswer(false);
-      props.scoreDispatch({ type: "INCREMENT-INCORRECT" });
+      scoreDispatch({ type: "INCREMENT-INCORRECT" });
     }
   };
 
   // when the game is over, show employee names and titles, make clicking no longer affect scores
-  if (props.disabled) {
+  if (disabled) {
     return (
       <Card className={classes.card}>
         <CardActionArea>

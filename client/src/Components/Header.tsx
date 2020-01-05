@@ -18,13 +18,12 @@ const useStyles = makeStyles(theme => ({
 
 const Header: React.FC<IHeaderProps> = props => {
   const classes = useStyles();
+  const { gameDispatch, gameState } = props;
+
   return (
     <AppBar position="static">
       <Toolbar className={classes.toolbar}>
-        <NavMenu
-          gameDispatch={props.gameDispatch}
-          gameState={props.gameState}
-        />
+        <NavMenu gameDispatch={gameDispatch} gameState={gameState} />
         <Typography variant="h4">Name Game</Typography>
       </Toolbar>
     </AppBar>

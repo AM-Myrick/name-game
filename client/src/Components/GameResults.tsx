@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 
 const GameResults: React.FC<IGameResultsProps> = props => {
   const classes = useStyles();
-  const { shouldHide } = props;
+  const { shouldHide, scoreState, timerDispatch } = props;
   const { isGameOver } = props.gameState;
 
   if (shouldHide || isGameOver === false) {
@@ -37,8 +37,8 @@ const GameResults: React.FC<IGameResultsProps> = props => {
 
   return (
     <Box className={classes.box}>
-      <SaveScore scoreState={props.scoreState} />
-      <RestartGame timerDispatch={props.timerDispatch} />
+      <SaveScore scoreState={scoreState} />
+      <RestartGame timerDispatch={timerDispatch} />
     </Box>
   );
 };

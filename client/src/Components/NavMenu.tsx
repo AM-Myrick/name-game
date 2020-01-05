@@ -9,7 +9,8 @@ import { IHeaderProps } from "./Header";
 const NavMenu: React.FC<IHeaderProps> = props => {
   // local state to handle opening and closing menu
   const [anchorEl, setAnchorEl] = React.useState<null | Element>(null);
-  const { shouldDisplayGameOptions } = props.gameState;
+  const { gameDispatch, gameState } = props;
+  const { shouldDisplayGameOptions } = gameState;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget);
@@ -18,7 +19,7 @@ const NavMenu: React.FC<IHeaderProps> = props => {
 
   const handleGameOptions = () => {
     handleClose();
-    props.gameDispatch({ type: "GAME-OPTIONS-TOGGLE" });
+    gameDispatch({ type: "GAME-OPTIONS-TOGGLE" });
   };
 
   return (

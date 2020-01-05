@@ -6,7 +6,8 @@ export interface IRestartGameProps {
 }
 
 const RestartGame: React.FC<IRestartGameProps> = props => {
-  const restartGame = () => props.timerDispatch({ type: "RESTART-TIMER" });
+  const { timerDispatch } = props;
+  const restartGame = () => timerDispatch({ type: "RESTART-TIMER" });
 
   return (
     <Button variant="outlined" color="primary" onClick={restartGame}>

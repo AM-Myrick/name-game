@@ -37,11 +37,13 @@ const useStyles = makeStyles(theme => ({
 
 const ScoresPage: React.FC<IScoresPageProps> = props => {
   const classes = useStyles();
+  const { gameDispatch, setShouldHide } = props;
   let scores = localStorage.getItem("wtQuizScores");
+
   React.useEffect(() => {
-    props.gameDispatch({ type: "RESET-GAME-STATE" });
+    gameDispatch({ type: "RESET-GAME-STATE" });
   }, []);
-  props.setShouldHide(true);
+  setShouldHide(true);
 
   if (scores) {
     const scoreArray: any[] = JSON.parse(scores);
