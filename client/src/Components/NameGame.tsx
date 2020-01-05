@@ -18,10 +18,10 @@ interface INameGameProps {
   gameMode: string;
   numOfResults: number;
   timerState: ITimerState;
-  scoreDispatch: Dispatch<any>;
+  scoreDispatch: Dispatch<{ type: string }>;
   setShouldHide: React.Dispatch<React.SetStateAction<boolean>>;
   gameState: IGameState;
-  gameDispatch: Dispatch<any>;
+  gameDispatch: Dispatch<{ type: string, gameMode?: string | undefined }>;
 }
 
 const useStyles = makeStyles(theme => ({

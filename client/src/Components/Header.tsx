@@ -4,10 +4,11 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import NavMenu from "./NavMenu";
+import { IGameState } from "../Reducers/gameReducer";
 
 export interface IHeaderProps {
-  gameDispatch: Dispatch<any>;
-  gameState: any;
+  gameDispatch: Dispatch<{ type: string }>;
+  gameState: IGameState;
 }
 
 const useStyles = makeStyles(theme => ({

@@ -8,10 +8,10 @@ import { IGameState } from "../Reducers/gameReducer";
 interface IRouteComponentProps {
   numOfResults: number;
   timerState: ITimerState;
-  scoreDispatch: Dispatch<any>;
+  scoreDispatch: Dispatch<{ type: string }>;
   setShouldHide: React.Dispatch<React.SetStateAction<boolean>>;
   gameState: IGameState;
-  gameDispatch: Dispatch<any>;
+  gameDispatch: Dispatch<{ type: string }>;
 }
 
 const RouteComponent: React.FC<IRouteComponentProps> = props => {

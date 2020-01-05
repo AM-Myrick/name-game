@@ -8,7 +8,7 @@ import { IGameState } from "../Reducers/gameReducer";
 
 export interface IGameResultsProps {
   scoreState: IScoreState;
-  timerDispatch: Dispatch<any>;
+  timerDispatch: Dispatch<{ type: string }>;
   shouldHide: boolean;
   gameState: IGameState;
 }

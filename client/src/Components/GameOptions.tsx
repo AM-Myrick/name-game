@@ -9,9 +9,9 @@ import { IGameState } from "../Reducers/gameReducer";
 interface IGameOptionProps {
   numOfResults: number;
   setNumOfResults: React.Dispatch<React.SetStateAction<number>>;
-  timerDispatch: Dispatch<any>;
+  timerDispatch: Dispatch<{ type: string }>;
   timerState: ITimerState;
-  gameDispatch: Dispatch<any>;
+  gameDispatch: Dispatch<{ type: string }>;
   gameState: IGameState;
   shouldHide: boolean;
 }

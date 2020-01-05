@@ -1,21 +1,16 @@
 import React, { Dispatch } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import { IGameState } from "../Reducers/gameReducer";
+import ScoresTable from "./ScoresTable";
+import Scores from "../Models/Scores";
 
 interface IScoresPageProps {
   setShouldHide: React.Dispatch<React.SetStateAction<boolean>>;
-  gameDispatch: Dispatch<any>;
+  gameDispatch: Dispatch<{ type: string }>;
   gameState: IGameState;
 }
 
@@ -46,36 +41,11 @@ const ScoresPage: React.FC<IScoresPageProps> = props => {
   setShouldHide(true);
 
   if (scores) {
-    const scoreArray: any[] = JSON.parse(scores);
+    const scoreArray: Scores[] = JSON.parse(scores);
     // sort scores in descending order by correct answers
     scoreArray.sort((a, b) => b.correctAnswers - a.correctAnswers);
 
-    return (
-      <Box className={classes.box}>
-        <TableContainer component={Paper}>
-          <Table aria-label="score table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell align="right">Correct Answers</TableCell>
-                <TableCell align="right">Incorrect Answers</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {scoreArray.map((score, index: number) => (
-                <TableRow key={index}>
-                  <TableCell component="th" scope="score">
-                    {score.name}
-                  </TableCell>
-                  <TableCell align="right">{score.correctAnswers}</TableCell>
-                  <TableCell align="right">{score.incorrectAnswers}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
-    );
+    return <ScoresTable classes={classes} scoreArray={scoreArray} />;
   }
 
   return (

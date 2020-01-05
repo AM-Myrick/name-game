@@ -9,8 +9,8 @@ import { ITimerState } from "../Reducers/timerReducer";
 
 interface ITimerProps {
   timerState: ITimerState;
-  timerDispatch: Dispatch<any>;
-  gameDispatch: Dispatch<any>;
+  timerDispatch: Dispatch<{ type: string }>;
+  gameDispatch: Dispatch<{ type: string }>;
 }
 
 const useStyles = makeStyles({

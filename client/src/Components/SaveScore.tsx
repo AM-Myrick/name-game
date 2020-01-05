@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, MouseEvent, FormEvent } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { IScoreState } from "../Reducers/scoreReducer";
 import TextField from "@material-ui/core/TextField";
@@ -32,7 +32,7 @@ const SaveScore: React.FC<ISaveScoreProps> = props => {
   const handleChange = (e: ChangeEvent<any>) =>
     setTextFieldValue(e.target.value);
 
-  const storeScore = (e: any) => {
+  const storeScore = (e: FormEvent<any> | MouseEvent<any>) => {
     e.preventDefault();
     const { correctAnswers, incorrectAnswers } = props.scoreState;
     let quizScores = localStorage.getItem("wtQuizScores");

@@ -12,7 +12,7 @@ interface IEmployeeCardProps {
   employee: Employee;
   answer: string;
   startNextRound: () => Promise<void>;
-  scoreDispatch: Dispatch<any>;
+  scoreDispatch: Dispatch<{ type: string }>;
   disabled: boolean;
 }
 

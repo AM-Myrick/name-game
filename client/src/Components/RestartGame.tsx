@@ -2,7 +2,7 @@ import React, { Dispatch } from "react";
 import Button from "@material-ui/core/Button";
 
 export interface IRestartGameProps {
-  timerDispatch: Dispatch<any>;
+  timerDispatch: Dispatch<{ type: string }>;
 }
 
 const RestartGame: React.FC<IRestartGameProps> = props => {
