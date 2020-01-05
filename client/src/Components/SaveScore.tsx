@@ -36,7 +36,16 @@ const SaveScore: React.FC<ISaveScoreProps> = props => {
     }
     setSavedScore(true);
   };
-  return savedScore === false ? (
+
+  if (savedScore) {
+    return (
+      <Button variant="contained" component={Link} to="/scores">
+        See Your Score
+      </Button>
+    );
+  }
+  
+  return (
     <form noValidate autoComplete="off" onSubmit={e => storeScore(e)}>
       <TextField
         id="outlined-basic"
@@ -50,10 +59,6 @@ const SaveScore: React.FC<ISaveScoreProps> = props => {
         Save Score
       </Button>
     </form>
-  ) : (
-    <Button variant="contained" component={Link} to="/scores">
-      See Your Score
-    </Button>
   );
 };
 
