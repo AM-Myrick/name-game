@@ -4,7 +4,6 @@ import { Switch, Route } from "react-router-dom";
 import ScoresPage from "./ScoresPage";
 import { ITimerState } from "../Reducers/timerReducer";
 import { IGameState } from "../Reducers/gameReducer";
-import { IScoreState } from "../Reducers/scoreReducer";
 
 interface IRouteComponentProps {
   numOfResults: number;
@@ -38,7 +37,6 @@ const RouteComponent: React.FC<IRouteComponentProps> = props => {
             numOfResults={numOfResults}
             setShouldHide={setShouldHide}
             gameState={gameState}
-            gameDispatch={gameDispatch}
             gameMode="all"
           />
         )}
@@ -53,7 +51,6 @@ const RouteComponent: React.FC<IRouteComponentProps> = props => {
             numOfResults={numOfResults}
             setShouldHide={setShouldHide}
             gameState={gameState}
-            gameDispatch={gameDispatch}
             gameMode="current"
           />
         )}
@@ -68,7 +65,6 @@ const RouteComponent: React.FC<IRouteComponentProps> = props => {
             numOfResults={numOfResults}
             setShouldHide={setShouldHide}
             gameState={gameState}
-            gameDispatch={gameDispatch}
             gameMode="mat"
           />
         )}

@@ -6,12 +6,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import AccessAlarmsOutlinedIcon from "@material-ui/icons/AccessAlarmsOutlined";
 import Badge from "@material-ui/core/Badge";
 import { ITimerState } from "../Reducers/timerReducer";
-import { IGameState } from "../Reducers/gameReducer";
 
 interface ITimerProps {
   timerState: ITimerState;
   timerDispatch: Dispatch<any>;
-  gameState: IGameState;
   gameDispatch: Dispatch<any>;
 }
 

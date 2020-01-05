@@ -1,4 +1,4 @@
-import React, { Dispatch, MouseEvent, ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { IScoreState } from "../Reducers/scoreReducer";
 import TextField from "@material-ui/core/TextField";
@@ -7,8 +7,6 @@ import { Link } from "react-router-dom";
 
 export interface ISaveScoreProps {
   scoreState: IScoreState;
-  scoreDispatch: Dispatch<any>;
-  timerDispatch: Dispatch<any>;
 }
 
 const useStyles = makeStyles(theme => ({

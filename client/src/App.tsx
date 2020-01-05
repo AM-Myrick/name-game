@@ -48,13 +48,9 @@ const App: React.FC = props => {
         />
         <GameResults
           scoreState={scoreState}
-          scoreDispatch={scoreDispatch}
-          timerState={timerState}
           timerDispatch={timerDispatch}
           shouldHide={shouldHide}
-          setShouldHide={setShouldHide}
           gameState={gameState}
-          gameDispatch={gameDispatch}
         />
       </Container>
     </Box>

@@ -2,20 +2,15 @@ import React, { Dispatch } from "react";
 import SaveScore from "./SaveScore";
 import { makeStyles } from "@material-ui/core/styles";
 import { IScoreState } from "../Reducers/scoreReducer";
-import { ITimerState } from "../Reducers/timerReducer";
 import Box from "@material-ui/core/Box";
 import RestartGame from "./RestartGame";
 import { IGameState } from "../Reducers/gameReducer";
 
 export interface IGameResultsProps {
   scoreState: IScoreState;
-  scoreDispatch: Dispatch<any>;
-  timerState: ITimerState;
   timerDispatch: Dispatch<any>;
   shouldHide: boolean;
-  setShouldHide: React.Dispatch<React.SetStateAction<boolean>>;
   gameState: IGameState;
-  gameDispatch: Dispatch<any>;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -34,21 +29,18 @@ const useStyles = makeStyles(theme => ({
 const GameResults: React.FC<IGameResultsProps> = props => {
   const classes = useStyles();
   const { shouldHide } = props;
+  const { isGameOver } = props.gameState;
 
-  if (shouldHide) {
+  if (shouldHide || isGameOver === false) {
     return null;
   }
-  
-  return props.gameState.isGameOver ? (
+
+  return (
     <Box className={classes.box}>
-      <SaveScore
-        scoreState={props.scoreState}
-        scoreDispatch={props.scoreDispatch}
-        timerDispatch={props.timerDispatch}
-      />
+      <SaveScore scoreState={props.scoreState} />
       <RestartGame timerDispatch={props.timerDispatch} />
     </Box>
-  ) : null;
+  );
 };
 
 export default GameResults;

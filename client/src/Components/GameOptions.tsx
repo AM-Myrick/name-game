@@ -44,7 +44,6 @@ const GameOptions: React.FC<IGameOptionProps> = props => {
         timerDispatch={props.timerDispatch}
         timerState={props.timerState}
         gameDispatch={props.gameDispatch}
-        gameState={props.gameState}
       />
     </Box>
   );

@@ -21,7 +21,6 @@ interface INameGameProps {
   scoreDispatch: Dispatch<any>;
   setShouldHide: React.Dispatch<React.SetStateAction<boolean>>;
   gameState: IGameState;
-  gameDispatch: Dispatch<any>;
 }
 
 const useStyles = makeStyles({
