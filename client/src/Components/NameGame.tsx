@@ -8,11 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import { ITimerState } from "../Reducers/timerReducer";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { IGameState } from "../Reducers/gameReducer";
-
-axios.defaults.baseURL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:9001"
-    : "https://nameless-cliffs-24621.herokuapp.com";
+axios.defaults.baseURL = "http://localhost:9001";
 
 interface INameGameProps {
   gameMode: string;
