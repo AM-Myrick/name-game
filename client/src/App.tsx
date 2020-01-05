@@ -1,14 +1,14 @@
 import React, { useReducer } from "react";
 import NameGame from "./Components/NameGame";
-import Timer from "./Components/Timer";
 import Header from "./Components/Header";
+import GameOptions from "./Components/GameOptions";
 import GameResults from "./Components/GameResults";
-import NumOfResultsSelect from "./Components/NumOfResultsSelect";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import { Switch, Route } from "react-router-dom";
 import { initialScoreState, scoreReducer } from "./Reducers/scoreReducer";
 import { initialTimerState, timerReducer } from "./Reducers/timerReducer";
+import { initialGameState, gameReducer } from "./Reducers/gameReducer";
 
 const App: React.FC = props => {
   const [numOfResults, setNumOfResults] = React.useState<number>(5);
@@ -20,16 +20,25 @@ const App: React.FC = props => {
     timerReducer,
     initialTimerState
   );
+  const [gameState, gameDispatch] = useReducer(gameReducer, initialGameState);
 
   return (
     <Box>
-      <Header timerDispatch={timerDispatch} timerState={timerState} />
+      <Header
+        timerDispatch={timerDispatch}
+        timerState={timerState}
+        gameDispatch={gameDispatch}
+        gameState={gameState}
+      />
       <Container>
-        <NumOfResultsSelect
+        <GameOptions
           numOfResults={numOfResults}
           setNumOfResults={setNumOfResults}
+          timerDispatch={timerDispatch}
+          timerState={timerState}
+          gameDispatch={gameDispatch}
+          gameState={gameState}
         />
-        <Timer timerDispatch={timerDispatch} timerState={timerState} />
         <Switch>
           <Route
             exact

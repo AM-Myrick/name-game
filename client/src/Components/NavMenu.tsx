@@ -1,4 +1,4 @@
-import React, { MouseEvent } from "react";
+import React, { MouseEvent, useReducer } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "@material-ui/core/Menu";
@@ -8,12 +8,16 @@ import { IHeaderProps } from "./Header";
 
 const NavMenu: React.FC<IHeaderProps> = props => {
   const [anchorEl, setAnchorEl] = React.useState<null | Element>(null);
+  const {shouldDisplayGameOptions} = props.gameState;
+
   const handleClick = (event: MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget);
+
   const handleClose = () => setAnchorEl(null);
-  const handleTimer = () => {
+
+  const handleGameOptions = () => {
     handleClose();
-    props.timerDispatch({ type: "TOGGLE-TIMER-MODE" });
+    props.gameDispatch({ type: "GAME-OPTIONS-TOGGLE" });
   };
 
   return (
@@ -48,10 +52,10 @@ const NavMenu: React.FC<IHeaderProps> = props => {
         <MenuItem onClick={handleClose} component={Link} to="/mat-employees">
           Mat* Only
         </MenuItem>
-        {props.timerState.isTimerMode ? (
-          <MenuItem onClick={handleTimer}>Hide Timer</MenuItem>
+        {shouldDisplayGameOptions ? (
+          <MenuItem onClick={handleGameOptions}>Hide Game Options</MenuItem>
         ) : (
-          <MenuItem onClick={handleTimer}>Show Timer</MenuItem>
+          <MenuItem onClick={handleGameOptions}>Show Game Options</MenuItem>
         )}
       </Menu>
     </div>

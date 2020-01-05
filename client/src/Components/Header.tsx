@@ -8,6 +8,8 @@ import "../Styles/Header.css";
 export interface IHeaderProps {
   timerDispatch: Dispatch<any>;
   timerState: any;
+  gameDispatch: Dispatch<any>;
+  gameState: any;
 }
 
 const Header: React.FC<IHeaderProps> = props => {
@@ -17,6 +19,8 @@ const Header: React.FC<IHeaderProps> = props => {
         <NavMenu
           timerDispatch={props.timerDispatch}
           timerState={props.timerState}
+          gameDispatch={props.gameDispatch}
+          gameState={props.gameState}
         />
         <Typography variant="h4">Name Game</Typography>
       </Toolbar>
