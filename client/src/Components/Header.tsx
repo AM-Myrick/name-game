@@ -1,19 +1,26 @@
 import React, { Dispatch } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import NavMenu from "./NavMenu";
-import "../Styles/Header.css";
 
 export interface IHeaderProps {
   gameDispatch: Dispatch<any>;
   gameState: any;
 }
 
+const useStyles = makeStyles(theme => ({
+  toolbar: {
+    backgroundColor: "#1AD9C3"
+  }
+}));
+
 const Header: React.FC<IHeaderProps> = props => {
+  const classes = useStyles();
   return (
     <AppBar position="static">
-      <Toolbar className="Toolbar">
+      <Toolbar className={classes.toolbar}>
         <NavMenu
           gameDispatch={props.gameDispatch}
           gameState={props.gameState}
