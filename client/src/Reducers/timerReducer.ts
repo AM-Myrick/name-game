@@ -25,7 +25,9 @@ export const timerReducer = (state: ITimerState, action: any) => {
     case "SHOW-TIMER":
       return { ...state, shouldDisplayTimer: true };
     case "RESTART-TIMER":
-      return { ...state, shouldRestartTimer: !state.shouldRestartTimer };
+      return { ...state, shouldRestartTimer: true };
+    case "DONT-RESTART-TIMER":
+      return { ...state, shouldRestartTimer: false };
     default:
       return state;
   }

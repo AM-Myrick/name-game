@@ -49,7 +49,7 @@ const Timer: React.FC<ITimerProps> = props => {
   const startTimer = () => {
     start();
     if (shouldRestartTimer) {
-      timerDispatch({ type: "RESTART-TIMER" });
+      timerDispatch({ type: "DONT-RESTART-TIMER" });
     }
     gameDispatch({ type: "GAME-RESET" });
     timerDispatch({ type: "TIMER-STARTED" });
